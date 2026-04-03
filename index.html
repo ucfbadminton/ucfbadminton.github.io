@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Racquet Bracket · Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-dark:  #0d7a45;
+  --green-mid:   #1a9e5c;
+  --green-light: #39d692;
+  --green-pale:  #eafaf0;
+  --green-card:  #f4fdf7;
+  --accent:      #10b981;
+  --ink:         #04251a;
+  --muted:       #5a7a69;
+  --rule:        #d0ead9;
+  --white:       #ffffff;
+  --shadow:      0 4px 20px rgba(6,30,18,0.08);
+  --live-red:    #ef4444;
+}
+
+html, body { min-height: 100%; font-family: 'DM Sans', system-ui, sans-serif; }
+
+body {
+  background: linear-gradient(160deg, var(--green-pale) 0%, #dfffe9 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 28px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 200;
+}
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 1.2rem;
+  color: var(--green-dark); white-space: nowrap;
+}
+.brand span { opacity: 0.5; font-weight: 400; margin-left: 6px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; }
+
+.live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #fef2f2; border: 1px solid #fca5a5;
+  color: var(--live-red); padding: 3px 10px; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--live-red);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+.topbar-right {
+  margin-left: auto; display: flex; align-items: center; gap: 10px;
+}
+.topbar-divider {
+  width: 1px; height: 18px; background: var(--rule); flex-shrink: 0;
+}
+.tournament-name {
+  font-size: 0.88rem; font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.last-updated {
+  font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace;
+}
+.btn-refresh {
+  background: transparent; border: 1px solid var(--rule);
+  color: var(--muted); padding: 5px 12px; border-radius: 8px;
+  cursor: pointer; font-size: 0.78rem; font-weight: 500;
+  transition: all 150ms ease; font-family: inherit;
+}
+.btn-refresh:hover { border-color: var(--accent); color: var(--ink); }
+.btn-refresh.spinning svg { animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MAIN LAYOUT ── */
+.layout {
+  display: flex; min-height: calc(100vh - 57px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid var(--rule);
+  padding: 20px 12px;
+  position: sticky; top: 57px;
+  height: calc(100vh - 57px); overflow-y: auto;
+}
+
+.sidebar-section { margin-bottom: 6px; }
+.sidebar-label {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--muted);
+  padding: 4px 10px 8px; display: block;
+}
+
+.cat-btn {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 9px 10px; border-radius: 9px;
+  border: none; background: transparent; cursor: pointer;
+  text-align: left; transition: all 150ms ease;
+  font-family: inherit;
+}
+.cat-btn:hover { background: rgba(255,255,255,0.7); }
+.cat-btn.active { background: var(--white); box-shadow: var(--shadow); }
+.cat-btn.active .cat-code { color: var(--green-dark); }
+.cat-btn.unavailable { opacity: 0.35; cursor: default; }
+.cat-btn.unavailable:hover { background: transparent; }
+
+.cat-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--muted); min-width: 36px;
+}
+.cat-name { font-size: 0.78rem; font-weight: 500; color: var(--ink); }
+
+.cat-status {
+  margin-left: auto; width: 7px; height: 7px;
+  border-radius: 50%; flex-shrink: 0;
+}
+.cat-status.loaded  { background: var(--accent); }
+.cat-status.loading { background: #fbbf24; animation: pulse-dot 1s infinite; }
+.cat-status.error   { background: #ef4444; }
+.cat-status.empty   { background: var(--rule); }
+
+/* ── CONTENT ── */
+.content {
+  flex: 1; padding: 28px 28px 60px; min-width: 0;
+}
+
+/* ── BRACKET VIEW TABS ── */
+.view-tabs {
+  display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.view-tab {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--rule); background: transparent;
+  cursor: pointer; font-size: 0.8rem; font-weight: 600;
+  color: var(--muted); transition: all 150ms; font-family: inherit;
+}
+.view-tab.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.view-tab:hover:not(.active) { border-color: var(--accent); color: var(--ink); }
+
+/* ── BRACKET HEADER ── */
+.bracket-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
+}
+.bracket-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem; font-weight: 700;
+}
+.bracket-badge {
+  display: inline-flex; align-items: center;
+  background: linear-gradient(90deg, var(--green-dark), var(--green-mid));
+  color: white; padding: 4px 14px 4px 10px;
+  border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+}
+.bracket-badge .code { font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; margin-right: 6px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white); border-radius: 14px;
+  padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.card-title {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+
+/* ── BRACKET RENDER ── */
+.bracket-wrap { overflow-x: auto; padding-bottom: 12px; }
+.bracket-rounds {
+  display: flex; gap: 0; align-items: flex-start; min-width: max-content;
+}
+.round-col { display: flex; flex-direction: column; min-width: 180px; }
+.round-label {
+  font-size: 0.63rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  text-align: center; padding: 0 12px 10px;
+}
+.round-matches { display: flex; flex-direction: column; flex: 1; }
+.match-slot {
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+
+.match-card {
+  width: 230px;
+  border: 1.5px solid var(--rule); border-radius: 10px;
+  overflow: hidden; background: var(--white);
+  box-shadow: 0 2px 8px rgba(6,30,18,0.05);
+}
+.match-id-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: white;
+  background: var(--green-mid); padding: 2px 8px; text-align: center;
+}
+.match-id-label.consolation-label { background: #d97706; }
+
+.match-team {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 5px; padding: 7px 8px 7px 10px;
+  font-size: 0.82rem; font-weight: 500;
+  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+}
+.match-team:last-child { border-bottom: none; }
+.match-team.bye  { color: var(--muted); font-style: italic; font-weight: 400; background: var(--green-card); }
+.match-team.tbd  { color: var(--muted); font-weight: 400; }
+.match-team.winner {
+  background: linear-gradient(90deg, #d1fae5, #ecfdf5);
+  font-weight: 700; color: var(--green-dark);
+}
+.match-team.winner .team-name-text::before { content: '✓ '; font-size: 0.7rem; opacity: 0.7; }
+.match-team.loser { background: #f9fafb; color: #9ca3af; font-weight: 400; }
+.team-name-text {
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.82rem;
+}
+.score-display {
+  display: flex; gap: 4px; flex-shrink: 0;
+}
+.score-chip {
+  min-width: 26px; padding: 2px 5px; text-align: center;
+  border: 1px solid var(--rule); border-radius: 5px;
+  font-size: 0.75rem; font-family: 'DM Mono', monospace; font-weight: 600;
+  color: var(--ink); background: var(--white);
+}
+.match-team.winner .score-chip { border-color: var(--accent); background: #f0fdf4; }
+.match-team.loser  .score-chip { background: #f9fafb; color: #9ca3af; }
+
+/* ── STANDINGS TABLE ── */
+.standing-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
+}
+.standing-table th {
+  text-align: left; font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); padding: 8px 10px;
+  border-bottom: 2px solid var(--rule);
+}
+.standing-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule); }
+.standing-table tr:last-child td { border-bottom: none; }
+.standing-table tr.standing-top td { font-weight: 700; color: var(--green-dark); }
+.standing-rank { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--muted); }
+
+/* ── LEAGUE SCHEDULE ── */
+.league-day-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.league-day-tab {
+  padding: 5px 14px; border-radius: 20px;
+  border: 1.5px solid var(--rule); background: transparent;
+  cursor: pointer; font-size: 0.78rem; font-weight: 600; color: var(--muted);
+  transition: all 150ms; font-family: inherit;
+}
+.league-day-tab.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.league-day-tab:hover:not(.active) { border-color: var(--accent); color: var(--ink); }
+
+.league-match-row {
+  display: flex; align-items: center; padding: 10px 4px;
+  border-bottom: 1px solid var(--rule); gap: 10px;
+}
+.league-match-row:last-child { border-bottom: none; }
+.league-team-name { flex: 1; font-weight: 600; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.league-team-name.right { text-align: right; }
+.league-vs { font-size: 0.72rem; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+.league-score {
+  min-width: 38px; padding: 4px; text-align: center;
+  border: 1.5px solid var(--rule); border-radius: 7px;
+  font-size: 0.85rem; font-family: 'DM Mono', monospace; font-weight: 600;
+  background: var(--green-card);
+}
+.league-score.winner { border-color: var(--accent); background: #f0fdf4; color: var(--green-dark); font-weight: 700; }
+.league-score.empty { color: var(--muted); border-style: dashed; }
+
+/* ── EMPTY / ERROR STATES ── */
+.empty-state {
+  text-align: center; padding: 60px 20px; color: var(--muted);
+}
+.empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+.empty-state h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ink); margin-bottom: 8px; }
+.empty-state p { font-size: 0.88rem; line-height: 1.6; }
+.empty-state code {
+  display: inline-block; background: var(--green-card); border: 1px solid var(--rule);
+  padding: 2px 7px; border-radius: 5px; font-family: 'DM Mono', monospace; font-size: 0.8rem;
+}
+
+/* ── CHAMPION BANNER ── */
+.champion-banner {
+  display: flex; align-items: center; gap: 14px;
+  background: linear-gradient(90deg, var(--green-dark), var(--accent), var(--green-light));
+  border-radius: 14px; padding: 16px 22px; margin-bottom: 18px;
+  color: white; box-shadow: 0 8px 30px rgba(16,185,129,0.3);
+  animation: banner-in 600ms cubic-bezier(.2,.9,.2,1) forwards;
+  opacity: 0; transform: translateY(-6px);
+}
+@keyframes banner-in { to { opacity: 1; transform: translateY(0); } }
+.champion-emoji { font-size: 2.2rem; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2)); }
+.champion-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+.champion-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; }
+
+/* ── STATS BAR ── */
+.stats-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.stat-pill {
+  background: var(--white); border: 1px solid var(--rule);
+  border-radius: 8px; padding: 6px 12px; font-size: 0.78rem;
+}
+.stat-pill strong { color: var(--green-dark); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .sidebar { width: 180px; }
+  .content { padding: 16px; }
+  .topbar-right { display: none; }
+}
+@media (max-width: 540px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%; height: auto; position: static;
+    border-right: none; border-bottom: 1px solid var(--rule);
+    padding: 12px;
+  }
+  .sidebar-section { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sidebar-label { display: none; }
+  .cat-btn { width: auto; padding: 6px 10px; }
+  .cat-name { display: none; }
+}
+
+/* ── SKELETON LOADER ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--rule) 25%, var(--green-pale) 50%, var(--rule) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ── CONFIG NOTICE ── */
+.config-notice {
+  background: #fffbeb; border: 1.5px solid #fcd34d;
+  border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
+  font-size: 0.85rem; color: #92400e; line-height: 1.6;
+}
+.config-notice code {
+  font-family: 'DM Mono', monospace; font-size: 0.78rem;
+  background: #fef3c7; padding: 1px 5px; border-radius: 4px;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="brand">Racquet Bracket <span>Live</span></div>
+  <div class="topbar-divider" id="topbar-divider"></div>
+  <div class="tournament-name" id="tournament-name"></div>
+  <div class="live-badge" id="live-badge"><div class="live-dot"></div>LIVE</div>
+  <div class="topbar-right">
+    <span class="last-updated" id="last-updated">—</span>
+    <button class="btn-refresh" id="btn-refresh" onclick="refreshCurrent()" title="Refresh">
+      <svg id="refresh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+      </svg>
+      Refresh
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <span class="sidebar-label">Men's Singles</span>
+      <button class="cat-btn" data-code="MSN" onclick="selectBracket('MSN')">
+        <span class="cat-code">MSN</span><span class="cat-name">Novice</span>
+        <span class="cat-status empty" id="status-MSN"></span>
+      </button>
+      <button class="cat-btn" data-code="MSI" onclick="selectBracket('MSI')">
+        <span class="cat-code">MSI</span><span class="cat-name">Intermediate</span>
+        <span class="cat-status empty" id="status-MSI"></span>
+      </button>
+      <button class="cat-btn" data-code="MSO" onclick="selectBracket('MSO')">
+        <span class="cat-code">MSO</span><span class="cat-name">Open</span>
+        <span class="cat-status empty" id="status-MSO"></span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Women's Singles</span>
+      <button class="cat-btn" data-code="WSN" onclick="selectBracket('WSN')">
+        <span class="cat-code">WSN</span><span class="cat-name">Novice</span>
+        <span class="cat-status empty" id="status-WSN"></span>
+      </button>
+      <button class="cat-btn" data-code="WSI" onclick="selectBracket('WSI')">
+        <span class="cat-code">WSI</span><span class="cat-name">Intermediate</span>
+        <span class="cat-status empty" id="status-WSI"></span>
+      </button>
+      <button class="cat-btn" data-code="WSO" onclick="selectBracket('WSO')">
+        <span class="cat-code">WSO</span><span class="cat-name">Open</span>
+        <span class="cat-status empty" id="status-WSO"></span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Men's Doubles</span>
+      <button class="cat-btn" data-code="MDN" onclick="selectBracket('MDN')">
+        <span class="cat-code">MDN</span><span class="cat-name">Novice</span>
+        <span class="cat-status empty" id="status-MDN"></span>
+      </button>
+      <button class="cat-btn" data-code="MDI" onclick="selectBracket('MDI')">
+        <span class="cat-code">MDI</span><span class="cat-name">Intermediate</span>
+        <span class="cat-status empty" id="status-MDI"></span>
+      </button>
+      <button class="cat-btn" data-code="MDO" onclick="selectBracket('MDO')">
+        <span class="cat-code">MDO</span><span class="cat-name">Open</span>
+        <span class="cat-status empty" id="status-MDO"></span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Women's Doubles</span>
+      <button class="cat-btn" data-code="WDN" onclick="selectBracket('WDN')">
+        <span class="cat-code">WDN</span><span class="cat-name">Novice</span>
+        <span class="cat-status empty" id="status-WDN"></span>
+      </button>
+      <button class="cat-btn" data-code="WDI" onclick="selectBracket('WDI')">
+        <span class="cat-code">WDI</span><span class="cat-name">Intermediate</span>
+        <span class="cat-status empty" id="status-WDI"></span>
+      </button>
+      <button class="cat-btn" data-code="WDO" onclick="selectBracket('WDO')">
+        <span class="cat-code">WDO</span><span class="cat-name">Open</span>
+        <span class="cat-status empty" id="status-WDO"></span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Mixed Doubles</span>
+      <button class="cat-btn" data-code="XDN" onclick="selectBracket('XDN')">
+        <span class="cat-code">XDN</span><span class="cat-name">Novice</span>
+        <span class="cat-status empty" id="status-XDN"></span>
+      </button>
+      <button class="cat-btn" data-code="XDI" onclick="selectBracket('XDI')">
+        <span class="cat-code">XDI</span><span class="cat-name">Intermediate</span>
+        <span class="cat-status empty" id="status-XDI"></span>
+      </button>
+      <button class="cat-btn" data-code="XDO" onclick="selectBracket('XDO')">
+        <span class="cat-code">XDO</span><span class="cat-name">Open</span>
+        <span class="cat-status empty" id="status-XDO"></span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content" id="content">
+    <div class="empty-state" id="welcome-screen">
+      <div class="emoji">🏸</div>
+      <h2>Racquet Bracket Live</h2>
+      <p>Select a bracket from the sidebar to view live results.</p>
+    </div>
+    <div id="bracket-view" style="display:none"></div>
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  ⚙️  CONFIGURATION — Edit this to match your repo!
+// ═══════════════════════════════════════════════════
+const CONFIG = {
+  // GitHub raw content base URL
+  // Format: https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/
+  // Example: "https://raw.githubusercontent.com/john/racquet-2025/main/"
+  // For local testing: "./"
+  baseUrl: "./",
+
+  // File naming pattern — {code} is replaced with MSN, XDI, etc.
+  filePattern: "racquet-bracket-{code}.json",
+
+  // Auto-refresh interval in milliseconds (default: 60000 = 1 minute)
+  // Set to 0 to disable auto-refresh
+  refreshInterval: 60000,
+
+  // Tournament name shown in the topbar (set to "" to hide)
+  tournamentName: "UCF Spring 2026 Tournament",
+
+  // Show the red LIVE badge in the topbar (set to false when tournament is over)
+  showLive: true,
+};
+// ═══════════════════════════════════════════════════
+
+const CAT_NAMES = {
+  MS: 'Men\'s Singles', WS: 'Women\'s Singles',
+  MD: 'Men\'s Doubles', WD: 'Women\'s Doubles', XD: 'Mixed Doubles',
+};
+const LEVEL_NAMES = { N: 'Novice', I: 'Intermediate', O: 'Open' };
+
+// State
+const cache = {};
+let currentCode = null;
+let currentView = 'bracket'; // bracket | consolation | league | standing
+let currentData = null;      // currently displayed bracket data
+let leagueActiveDay = {};
+let refreshTimer = null;
+
+function getUrl(code) {
+  return CONFIG.baseUrl + CONFIG.filePattern.replace('{code}', code);
+}
+
+// ── Fetch a bracket JSON ──
+async function fetchBracket(code, forceRefresh = false) {
+  if (!forceRefresh && cache[code] && cache[code].data) return cache[code];
+
+  setStatus(code, 'loading');
+  const url = getUrl(code);
+
+  try {
+    const res = await fetch(url + '?_=' + Date.now()); // cache-bust
+    if (!res.ok) throw new Error(res.status === 404 ? 'not_found' : 'error');
+    const data = await res.json();
+    cache[code] = { data, fetchedAt: new Date() };
+    setStatus(code, 'loaded');
+    return cache[code];
+  } catch (e) {
+    const reason = e.message === 'not_found' ? 'empty' : 'error';
+    cache[code] = { data: null, error: reason, fetchedAt: new Date() };
+    setStatus(code, reason);
+    return cache[code];
+  }
+}
+
+// ── Select + render a bracket ──
+async function selectBracket(code) {
+  currentCode = code;
+
+  // Highlight sidebar
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.code === code);
+  });
+
+  // Show loading in content
+  const bracketView = document.getElementById('bracket-view');
+  const welcomeScreen = document.getElementById('welcome-screen');
+  welcomeScreen.style.display = 'none';
+  bracketView.style.display = 'block';
+  bracketView.innerHTML = renderSkeleton();
+
+  const result = await fetchBracket(code);
+  updateTimestamp(result.fetchedAt);
+
+  if (!result.data) {
+    bracketView.innerHTML = renderNotFound(code);
+    return;
+  }
+
+  // Check if URL is still default
+  if (CONFIG.baseUrl.includes('YOUR_USERNAME')) {
+    bracketView.innerHTML = renderConfigNeeded(code);
+    return;
+  }
+
+  renderBracketData(result.data, code);
+}
+
+// ── Refresh current bracket ──
+async function refreshCurrent() {
+  if (!currentCode) return;
+  const btn = document.getElementById('btn-refresh');
+  btn.classList.add('spinning');
+
+  const result = await fetchBracket(currentCode, true);
+  updateTimestamp(result.fetchedAt);
+  btn.classList.remove('spinning');
+
+  if (!result.data) {
+    document.getElementById('bracket-view').innerHTML = renderNotFound(currentCode);
+    return;
+  }
+  renderBracketData(result.data, currentCode);
+}
+
+function updateTimestamp(date) {
+  if (!date) return;
+  const el = document.getElementById('last-updated');
+  el.textContent = 'Updated ' + date.toLocaleTimeString();
+}
+
+// ── Main render entry ──
+function renderBracketData(data, code) {
+  currentData = data; // store globally so tab buttons can reference it safely
+
+  const bracketView = document.getElementById('bracket-view');
+
+  // Determine available tabs
+  const hasBracket     = !!data.bracket;
+  const hasConsolation = !!data.consolationBracket;
+  const hasLeague      = !!data.leagueSchedule;
+  const hasStanding    = hasLeague;
+
+  const tabs = [];
+  if (hasBracket)     tabs.push({ id: 'bracket',     label: 'Bracket' });
+  if (hasConsolation) tabs.push({ id: 'consolation',  label: 'Consolation' });
+  if (hasLeague)      tabs.push({ id: 'league',       label: 'League' });
+  if (hasStanding)    tabs.push({ id: 'standing',     label: 'Standing' });
+
+  // Default to first available tab
+  if (!tabs.find(t => t.id === currentView)) {
+    currentView = tabs[0]?.id ?? 'bracket';
+  }
+
+  const catCode  = data.category || code.slice(0, 2);
+  const lvlCode  = data.level    || code.slice(2);
+  const catName  = CAT_NAMES[catCode] || catCode;
+  const lvlName  = LEVEL_NAMES[lvlCode] || lvlCode;
+
+  // Champions
+  const bracketChampion = getChampion(data.bracket);
+  const leagueChampion  = getLeagueChampion(data);
+
+  let html = `
+    <div class="bracket-header">
+      <h1 class="bracket-title">${catName}</h1>
+      <div class="bracket-badge">
+        <span class="code">${code}</span>
+        ${lvlName}
+      </div>
+    </div>
+  `;
+
+  if (bracketChampion) {
+    html += `
+      <div class="champion-banner">
+        <div class="champion-emoji">🥇</div>
+        <div>
+          <div class="champion-label">Bracket Champion</div>
+          <div class="champion-name">${escHtml(bracketChampion)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (leagueChampion) {
+    html += `
+      <div class="champion-banner" style="animation-delay:150ms">
+        <div class="champion-emoji">🏆</div>
+        <div>
+          <div class="champion-label">League Champion</div>
+          <div class="champion-name">${escHtml(leagueChampion)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabs.length > 1) {
+    html += `<div class="view-tabs">` +
+      tabs.map(t => `<button class="view-tab${t.id === currentView ? ' active' : ''}" onclick="switchView('${t.id}')">${t.label}</button>`).join('') +
+      `</div>`;
+  }
+
+  html += `<div id="view-content">` + renderView(currentView, data, code) + `</div>`;
+  bracketView.innerHTML = html;
+}
+
+function switchView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent === ({bracket:'Bracket',consolation:'Consolation',league:'League',standing:'Standing'}[view]));
+  });
+  document.getElementById('view-content').innerHTML = renderView(view, currentData, currentCode);
+}
+
+function renderView(view, data, code) {
+  if (view === 'bracket')     return renderBracketView(data.bracket, code);
+  if (view === 'consolation') return renderConsolationView(data.consolationBracket, code);
+  if (view === 'league')      return renderLeagueView(data, code);
+  if (view === 'standing')    return renderStandingView(data);
+  return '';
+}
+
+// ── BRACKET VIEW ──
+function renderBracketView(bracket, code) {
+  if (!bracket) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No bracket data.</p></div></div>`;
+
+  const { rounds, size, byeCount, teamCount } = bracket;
+  const roundNames = getRoundNames(rounds.length);
+
+  let html = `
+    <div class="stats-bar">
+      <div class="stat-pill">Teams: <strong>${teamCount}</strong></div>
+      <div class="stat-pill">Bracket size: <strong>${size}</strong></div>
+      <div class="stat-pill">Byes: <strong>${byeCount}</strong></div>
+      <div class="stat-pill">Rounds: <strong>${rounds.length}</strong></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Main Bracket</div>
+      <div class="bracket-wrap"><div class="bracket-rounds">
+  `;
+
+  rounds.forEach((matches, ri) => {
+    const slotH = 110 * Math.pow(2, ri);
+    html += `<div class="round-col"><div class="round-label">${roundNames[ri] || 'Round ' + (ri + 1)}</div><div class="round-matches">`;
+    matches.forEach((m, mi) => {
+      html += `<div class="match-slot" style="height:${slotH}px">${buildMatchCardHtml(m, ri, mi, code, size, false)}</div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  html += `</div></div></div></div>`;
+  return html;
+}
+
+// ── CONSOLATION VIEW ──
+function renderConsolationView(bracket, code) {
+  if (!bracket) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No consolation bracket.</p></div></div>`;
+
+  const { rounds } = bracket;
+  const roundNames = getRoundNames(rounds.length);
+
+  let html = `<div class="card"><div class="card-title">Consolation Bracket</div><div class="bracket-wrap"><div class="bracket-rounds">`;
+
+  rounds.forEach((matches, ri) => {
+    const slotH = 110 * Math.pow(2, ri);
+    html += `<div class="round-col"><div class="round-label">${roundNames[ri] || 'Round ' + (ri + 1)}</div><div class="round-matches">`;
+    matches.forEach((m, mi) => {
+      html += `<div class="match-slot" style="height:${slotH}px">${buildMatchCardHtml(m, ri, mi, 'C' + code, bracket.size || 4, true)}</div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  html += `</div></div></div></div>`;
+  return html;
+}
+
+// ── LEAGUE VIEW ──
+function renderLeagueView(data, code) {
+  if (!data.leagueSchedule) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No league data.</p></div></div>`;
+
+  const schedule = data.leagueSchedule;
+  const bestOf   = data.leagueBestOf || 1;
+  const dayKey   = code;
+  if (leagueActiveDay[dayKey] === undefined) leagueActiveDay[dayKey] = 0;
+  const activeDay = Math.min(leagueActiveDay[dayKey], schedule.length - 1);
+
+  let html = `<div class="league-day-tabs">` +
+    schedule.map((_, i) => `<button class="league-day-tab${i === activeDay ? ' active' : ''}" onclick="setLeagueDay('${code}', ${i})">MD ${i + 1}</button>`).join('') +
+    `</div>`;
+
+  const day = schedule[activeDay];
+  html += `<div class="card"><div class="card-title">Matchday ${activeDay + 1}</div>`;
+
+  day.forEach(m => {
+    const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
+    const matchDone = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
+    const winsNeeded = Math.ceil(bestOf / 2);
+    const aWon = matchDone && wA >= winsNeeded;
+    const bWon = matchDone && wB >= winsNeeded;
+
+    html += `<div class="league-match-row">
+      <span class="league-team-name" style="${aWon ? 'font-weight:700;color:var(--green-dark)' : ''}">${escHtml(m.a)}</span>`;
+
+    for (let gi = 0; gi < bestOf; gi++) {
+      const sa = (m.scoresA || [])[gi];
+      const sb = (m.scoresB || [])[gi];
+      const hasVal = sa !== null && sa !== undefined && sb !== null && sb !== undefined;
+      const aW = hasVal && sa > sb;
+      html += `<span class="league-score${!hasVal ? ' empty' : (aW ? ' winner' : '')}">${hasVal ? sa : '—'}</span>`;
+    }
+
+    html += `<span class="league-vs">vs</span>`;
+
+    for (let gi = 0; gi < bestOf; gi++) {
+      const sa = (m.scoresA || [])[gi];
+      const sb = (m.scoresB || [])[gi];
+      const hasVal = sa !== null && sa !== undefined && sb !== null && sb !== undefined;
+      const bW = hasVal && sb > sa;
+      html += `<span class="league-score${!hasVal ? ' empty' : (bW ? ' winner' : '')}">${hasVal ? sb : '—'}</span>`;
+    }
+
+    html += `<span class="league-team-name right" style="${bWon ? 'font-weight:700;color:var(--green-dark)' : ''}">${escHtml(m.b)}</span>
+    </div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+// ── STANDING VIEW ──
+function renderStandingView(data) {
+  if (!data.leagueSchedule) return `<div class="card"><div class="empty-state"><div class="emoji">📊</div><p>No standings data.</p></div></div>`;
+
+  const schedule = data.leagueSchedule;
+  const bestOf   = data.leagueBestOf || 1;
+  const teams    = data.teams || [];
+
+  const stats = {};
+  teams.forEach(t => { stats[t] = { p:0, w:0, l:0, pf:0, pa:0, ppf:0, ppa:0 }; });
+
+  schedule.forEach(day => {
+    day.forEach(m => {
+      if (!stats[m.a] || !stats[m.b]) return;
+      const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
+      const anyEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
+      if (!anyEntered) return;
+      stats[m.a].pf += wA; stats[m.a].pa += wB;
+      stats[m.b].pf += wB; stats[m.b].pa += wA;
+      (m.scoresA || []).forEach((sa, gi) => {
+        const sb = (m.scoresB || [])[gi];
+        if (sa !== null && sa !== undefined && sb !== null && sb !== undefined) {
+          stats[m.a].ppf += sa; stats[m.a].ppa += sb;
+          stats[m.b].ppf += sb; stats[m.b].ppa += sa;
+        }
+      });
+      const winsNeeded = Math.ceil(bestOf / 2);
+      if (wA >= winsNeeded || wB >= winsNeeded) {
+        stats[m.a].p++; stats[m.b].p++;
+        if (wA > wB) { stats[m.a].w++; stats[m.b].l++; }
+        else         { stats[m.b].w++; stats[m.a].l++; }
+      }
+    });
+  });
+
+  const sorted = Object.entries(stats).sort((x, y) => {
+    const [,a] = x, [,b] = y;
+    const wl = (b.w - b.l) - (a.w - a.l);
+    if (wl !== 0) return wl;
+    const gw = (b.pf - b.pa) - (a.pf - a.pa);
+    if (gw !== 0) return gw;
+    return (b.ppf - b.ppa) - (a.ppf - a.ppa);
+  });
+
+  let html = `<div class="card"><div class="card-title">League Standings</div>
+    <table class="standing-table">
+      <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>GW</th><th>GL</th><th>PF</th><th>PA</th><th>+/-</th></tr></thead>
+      <tbody>`;
+
+  sorted.forEach(([name, s], i) => {
+    const diff = s.ppf - s.ppa;
+    html += `<tr class="${i === 0 ? 'standing-top' : ''}">
+      <td class="standing-rank">${i + 1}</td>
+      <td>${escHtml(name)}</td>
+      <td>${s.p}</td><td>${s.w}</td><td>${s.l}</td>
+      <td>${s.pf}</td><td>${s.pa}</td>
+      <td>${s.ppf}</td><td>${s.ppa}</td>
+      <td style="font-weight:600;color:${diff > 0 ? 'var(--green-dark)' : diff < 0 ? '#dc2626' : 'var(--muted)'}">${diff > 0 ? '+' : ''}${diff}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+  return html;
+}
+
+// ── Build read-only match card HTML ──
+function buildMatchCardHtml(m, ri, mi, code, bracketSize, isConsolation) {
+  const roundSize = bracketSize / Math.pow(2, ri);
+  const labelText = `${code}${roundSize}#${mi + 1}`;
+
+  function teamRowHtml(name, side) {
+    const isBye = name === 'BYE';
+    const isTbd = !name || name === 'TBD';
+    let cls = 'match-team';
+    if (isBye) cls += ' bye';
+    else if (isTbd) cls += ' tbd';
+    else if (m.winner === side) cls += ' winner';
+    else if (m.winner && m.winner !== side) cls += ' loser';
+
+    const scores = side === 'a' ? (m.scoresA || []) : (m.scoresB || []);
+    const filledScores = scores.filter(s => s !== null && s !== undefined);
+
+    let scoreHtml = '';
+    if (!isBye && !isTbd && filledScores.length > 0) {
+      scoreHtml = `<div class="score-display">` +
+        filledScores.map(s => `<span class="score-chip">${s}</span>`).join('') +
+        `</div>`;
+    }
+
+    return `<div class="${cls}">
+      <span class="team-name-text">${escHtml(name || 'TBD')}</span>
+      ${scoreHtml}
+    </div>`;
+  }
+
+  return `<div class="match-card">
+    <div class="match-id-label${isConsolation ? ' consolation-label' : ''}">${escHtml(labelText)}</div>
+    ${teamRowHtml(m.a, 'a')}
+    ${teamRowHtml(m.b, 'b')}
+  </div>`;
+}
+
+// ── Utilities ──
+function getRoundNames(total) {
+  const finals = ['Final', 'Semi-Final', 'Quarter-Final'];
+  return Array.from({length: total}, (_, i) => {
+    const fromEnd = total - 1 - i;
+    return fromEnd < finals.length ? finals[fromEnd] : `Round ${i + 1}`;
+  });
+}
+
+function getChampion(bracket) {
+  if (!bracket) return null;
+  const finalMatch = bracket.rounds[bracket.rounds.length - 1]?.[0];
+  if (!finalMatch?.winner) return null;
+  const name = finalMatch[finalMatch.winner];
+  return (name && name !== 'TBD' && name !== 'BYE') ? name : null;
+}
+
+function getLeagueChampion(data) {
+  if (!data.leagueSchedule) return null;
+  const schedule = data.leagueSchedule;
+  const bestOf   = data.leagueBestOf || 1;
+  const teams    = data.teams || [];
+
+  // All matches must be completed
+  const allDone = schedule.every(day =>
+    day.every(m => (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null))
+  );
+  if (!allDone) return null;
+
+  // Tally standings (same logic as renderStandingView)
+  const stats = {};
+  teams.forEach(t => { stats[t] = { w: 0, l: 0, pf: 0, pa: 0, ppf: 0, ppa: 0 }; });
+
+  schedule.forEach(day => {
+    day.forEach(m => {
+      if (!stats[m.a] || !stats[m.b]) return;
+      const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
+      const anyEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
+      if (!anyEntered) return;
+      stats[m.a].pf += wA; stats[m.a].pa += wB;
+      stats[m.b].pf += wB; stats[m.b].pa += wA;
+      (m.scoresA || []).forEach((sa, gi) => {
+        const sb = (m.scoresB || [])[gi];
+        if (sa !== null && sb !== null) {
+          stats[m.a].ppf += sa; stats[m.a].ppa += sb;
+          stats[m.b].ppf += sb; stats[m.b].ppa += sa;
+        }
+      });
+      const winsNeeded = Math.ceil(bestOf / 2);
+      if (wA >= winsNeeded || wB >= winsNeeded) {
+        if (wA > wB) { stats[m.a].w++; stats[m.b].l++; }
+        else         { stats[m.b].w++; stats[m.a].l++; }
+      }
+    });
+  });
+
+  const sorted = Object.entries(stats).sort(([, a], [, b]) => {
+    const wl = (b.w - b.l) - (a.w - a.l);
+    if (wl !== 0) return wl;
+    const gw = (b.pf - b.pa) - (a.pf - a.pa);
+    if (gw !== 0) return gw;
+    return (b.ppf - b.ppa) - (a.ppf - a.ppa);
+  });
+
+  return sorted[0]?.[0] ?? null;
+}
+
+function countGameWins(scoresA, scoresB, bestOf) {
+  let wA = 0, wB = 0;
+  const n = Math.max(scoresA.length, scoresB.length, bestOf);
+  for (let i = 0; i < n; i++) {
+    const a = scoresA[i], b = scoresB[i];
+    if (a !== null && a !== undefined && b !== null && b !== undefined) {
+      if (a > b) wA++; else if (b > a) wB++;
+    }
+  }
+  return { wA, wB };
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function setStatus(code, status) {
+  const el = document.getElementById('status-' + code);
+  if (el) { el.className = 'cat-status ' + status; }
+}
+
+function setLeagueDay(code, day) {
+  leagueActiveDay[code] = day;
+  const result = cache[code];
+  if (result?.data) renderBracketData(result.data, code);
+}
+
+function renderSkeleton() {
+  return `<div style="padding:20px">
+    <div class="skeleton" style="height:36px;width:220px;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:16px;width:300px;margin-bottom:24px"></div>
+    <div class="skeleton" style="height:200px;margin-bottom:12px"></div>
+  </div>`;
+}
+
+function renderNotFound(code) {
+  const isDefaultUrl = CONFIG.baseUrl.includes('YOUR_USERNAME');
+  if (isDefaultUrl) return renderConfigNeeded(code);
+  return `<div class="empty-state">
+    <div class="emoji">📂</div>
+    <h2>No file found</h2>
+    <p>Could not find <code>racquet-bracket-${code}.json</code> in your repository.<br><br>
+    Make sure the file is uploaded to:<br><code>${getUrl(code)}</code></p>
+  </div>`;
+}
+
+function renderConfigNeeded(code) {
+  return `<div>
+    <div class="config-notice">
+      ⚙️ <strong>Setup needed:</strong> Edit the <code>CONFIG.baseUrl</code> at the top of this file to point to your GitHub repository.<br><br>
+      Example: <code>https://raw.githubusercontent.com/your-username/your-repo/main/</code>
+    </div>
+    <div class="empty-state">
+      <div class="emoji">🏸</div>
+      <h2>Ready to go!</h2>
+      <p>Once configured, upload your JSON files as:<br>
+      <code>racquet-bracket-MSN.json</code>, <code>racquet-bracket-XDI.json</code>, etc.<br><br>
+      This viewer will auto-refresh every ${CONFIG.refreshInterval / 1000}s.</p>
+    </div>
+  </div>`;
+}
+
+// ── Auto-refresh ──
+function startAutoRefresh() {
+  if (!CONFIG.refreshInterval) return;
+  refreshTimer = setInterval(() => {
+    if (currentCode) refreshCurrent();
+  }, CONFIG.refreshInterval);
+}
+
+// ── Init: scan all brackets on load ──
+async function initScan() {
+  if (CONFIG.baseUrl.includes('YOUR_USERNAME')) return;
+
+  const allCodes = ['MSN','MSI','MSO','WSN','WSI','WSO','MDN','MDI','MDO','WDN','WDI','WDO','XDN','XDI','XDO'];
+  // Fire all fetches in parallel (non-blocking)
+  allCodes.forEach(code => fetchBracket(code));
+}
+
+// ── Check URL hash for deep-linking ──
+function checkHash() {
+  const hash = window.location.hash.replace('#', '').toUpperCase();
+  const allCodes = ['MSN','MSI','MSO','WSN','WSI','WSO','MDN','MDI','MDO','WDN','WDI','WDO','XDN','XDI','XDO'];
+  if (allCodes.includes(hash)) selectBracket(hash);
+}
+
+window.addEventListener('hashchange', checkHash);
+
+// ── Boot ──
+// Apply CONFIG to topbar
+(function initTopbar() {
+  const nameEl    = document.getElementById('tournament-name');
+  const dividerEl = document.getElementById('topbar-divider');
+  const liveEl    = document.getElementById('live-badge');
+
+  if (CONFIG.tournamentName) {
+    nameEl.textContent    = CONFIG.tournamentName;
+    dividerEl.style.display = '';
+  } else {
+    nameEl.style.display    = 'none';
+    dividerEl.style.display = 'none';
+  }
+
+  if (!CONFIG.showLive) {
+    liveEl.style.display = 'none';
+  }
+})();
+
+startAutoRefresh();
+checkHash();
+initScan();
+</script>
+</body>
+</html>
