@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "category": "XD",
+  "level": "O",
+  "teams": [
+    "Renee Wan / Alex Wong",
+    "Pratush Brahma / Alpa Nawre",
+    "Aaron Mares / Nurjahan Sriti",
+    "Fumiya Kayatani / Yushi Huang"
+  ],
+  "bracket": null,
+  "consolationBracket": null,
+  "leagueSchedule": [
+    [
+      {
+        "a": "Renee Wan / Alex Wong",
+        "b": "Fumiya Kayatani / Yushi Huang",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Pratush Brahma / Alpa Nawre",
+        "b": "Aaron Mares / Nurjahan Sriti",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Renee Wan / Alex Wong",
+        "b": "Aaron Mares / Nurjahan Sriti",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Fumiya Kayatani / Yushi Huang",
+        "b": "Pratush Brahma / Alpa Nawre",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Renee Wan / Alex Wong",
+        "b": "Pratush Brahma / Alpa Nawre",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Aaron Mares / Nurjahan Sriti",
+        "b": "Fumiya Kayatani / Yushi Huang",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  ],
+  "leagueBestOf": 3,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "3"
+}
