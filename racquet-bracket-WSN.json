@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "category": "WS",
+  "level": "N",
+  "teams": [
+    "Jillian Yap",
+    "Angel Trinh-Nguyen",
+    "Natcha Taweesuk",
+    "Savannah Bourget"
+  ],
+  "bracket": null,
+  "consolationBracket": null,
+  "leagueSchedule": [
+    [
+      {
+        "a": "Jillian Yap",
+        "b": "Savannah Bourget",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Angel Trinh-Nguyen",
+        "b": "Natcha Taweesuk",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Jillian Yap",
+        "b": "Natcha Taweesuk",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Savannah Bourget",
+        "b": "Angel Trinh-Nguyen",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Jillian Yap",
+        "b": "Angel Trinh-Nguyen",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Natcha Taweesuk",
+        "b": "Savannah Bourget",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  ],
+  "leagueBestOf": 3,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "3"
+}
