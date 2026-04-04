@@ -47,20 +47,20 @@
         "a": "Thanh Van / Vladimir Sosnin",
         "b": "Alex wong / Pratush brahma",
         "scoresA": [
-          null,
-          null,
+          21,
+          21,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          15,
+          11,
           null
         ]
       }
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 0,
+  "leagueActiveDay": 2,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
