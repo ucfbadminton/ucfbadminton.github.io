@@ -314,7 +314,16 @@
       [
         {
           "a": "Yujian Wang",
-          "b": "Rumi Barsotti"
+          "b": "Rumi Barsotti",
+          "scoresA": [
+            25,
+            25
+          ],
+          "scoresB": [
+            16,
+            17
+          ],
+          "winner": "a"
         }
       ]
     ],
