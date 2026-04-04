@@ -176,7 +176,18 @@
       [
         {
           "a": "Tianxingjian Ding / Boning Sima",
-          "b": "Tristan Sookdeo / Safraz Rashdan"
+          "b": "Tristan Sookdeo / Safraz Rashdan",
+          "scoresA": [
+            21,
+            13,
+            21
+          ],
+          "scoresB": [
+            16,
+            21,
+            17
+          ],
+          "winner": "a"
         }
       ]
     ],

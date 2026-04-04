@@ -14,7 +14,18 @@
       [
         {
           "a": "Shan Malhotra / Mary Nguyen",
-          "b": "Alec Kwan / Ivy Hoang"
+          "b": "Alec Kwan / Ivy Hoang",
+          "scoresA": [
+            21,
+            17,
+            22
+          ],
+          "scoresB": [
+            17,
+            21,
+            20
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -34,7 +45,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Shan Malhotra / Mary Nguyen",
           "b": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala"
         },
         {
