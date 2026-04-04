@@ -506,7 +506,16 @@
       [
         {
           "a": "Alex Rong",
-          "b": "Dhruv Naik"
+          "b": "Dhruv Naik",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            15,
+            18
+          ],
+          "winner": "a"
         }
       ]
     ],

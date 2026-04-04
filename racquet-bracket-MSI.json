@@ -114,7 +114,14 @@
       [
         {
           "a": "Mehedi Hossain",
-          "b": "Shakil Sharif"
+          "b": "Shakil Sharif",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            20
+          ],
+          "winner": "a"
         },
         {
           "a": "Rome Huynh",
@@ -130,8 +137,15 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Hemanth Gunduboina"
+          "a": "Mehedi Hossain",
+          "b": "Hemanth Gunduboina",
+          "scoresA": [
+            19
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         }
       ]
     ],
