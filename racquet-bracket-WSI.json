@@ -47,20 +47,20 @@
         "a": "Vaidehi Saini",
         "b": "Harshitha Sathees Kumar",
         "scoresA": [
-          null,
-          null,
+          16,
+          12,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          21,
+          21,
           null
         ]
       }
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 1,
+  "leagueActiveDay": 2,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
