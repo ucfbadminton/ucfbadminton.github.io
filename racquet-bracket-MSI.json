@@ -73,7 +73,16 @@
       [
         {
           "a": "Taha Zafar",
-          "b": "Raghav Gupta"
+          "b": "Raghav Gupta",
+          "scoresA": [
+            18,
+            15
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Nguyen Khang Vu",
@@ -82,7 +91,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Raghav Gupta",
           "b": "TBD"
         }
       ]
@@ -91,7 +100,37 @@
     "byeCount": 0,
     "teamCount": 8
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Mehedi Hossain",
+          "b": "Shakil Sharif"
+        },
+        {
+          "a": "Rome Huynh",
+          "b": "Hemanth Gunduboina",
+          "scoresA": [
+            14
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Hemanth Gunduboina"
+        }
+      ]
+    ],
+    "size": 4,
+    "byeCount": 0,
+    "teamCount": 4,
+    "_loserKey": "Hemanth Gunduboina|Mehedi Hossain|Rome Huynh|Shakil Sharif"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,

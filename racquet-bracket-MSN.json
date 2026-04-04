@@ -476,17 +476,37 @@
       [
         {
           "a": "Shenglong",
-          "b": "Alex Rong"
+          "b": "Alex Rong",
+          "scoresA": [
+            20,
+            18
+          ],
+          "winner": "b",
+          "scoresB": [
+            22,
+            21
+          ]
         },
         {
           "a": "Dhruv Naik",
-          "b": "Sai Krishna Sangeetha"
+          "b": "Sai Krishna Sangeetha",
+          "scoresA": [
+            17,
+            21,
+            23
+          ],
+          "scoresB": [
+            21,
+            14,
+            21
+          ],
+          "winner": "a"
         }
       ],
       [
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Alex Rong",
+          "b": "Dhruv Naik"
         }
       ]
     ],
