@@ -272,28 +272,12 @@
     "rounds": [
       [
         {
-          "a": "Christopher Martens",
-          "b": "BYE",
-          "winner": "a"
+          "a": "Aryan Pattu",
+          "b": "Shenglong"
         },
         {
-          "a": "Shenglong",
-          "b": "Mayank Garg"
-        },
-        {
-          "a": "BYE",
-          "b": "Richard Zhang",
-          "winner": "b"
-        },
-        {
-          "a": "BYE",
-          "b": "Alex Rong",
-          "winner": "b"
-        },
-        {
-          "a": "BYE",
-          "b": "Dhruv Naik",
-          "winner": "b"
+          "a": "Mayank Garg",
+          "b": "Donovan Dietrick"
         },
         {
           "a": "BYE",
@@ -301,32 +285,44 @@
           "winner": "b"
         },
         {
-          "a": "Donovan Dietrick",
-          "b": "BYE",
-          "winner": "a"
+          "a": "Alex Rong",
+          "b": "Mohit Pathak"
         },
         {
           "a": "An You Ooi",
+          "b": "Hunter Norman"
+        },
+        {
+          "a": "BYE",
+          "b": "Dhruv Naik",
+          "winner": "b"
+        },
+        {
+          "a": "Christopher Martens",
+          "b": "Richard Zhang"
+        },
+        {
+          "a": "Sai Krishna Sangeetha",
           "b": "BYE",
           "winner": "a"
         }
       ],
       [
         {
-          "a": "Christopher Martens",
+          "a": "TBD",
           "b": "TBD"
         },
         {
-          "a": "Richard Zhang",
-          "b": "Alex Rong"
+          "a": "Ajohn Trinh-Nguyen",
+          "b": "TBD"
         },
         {
-          "a": "Dhruv Naik",
-          "b": "Ajohn Trinh-Nguyen"
+          "a": "TBD",
+          "b": "Dhruv Naik"
         },
         {
-          "a": "Donovan Dietrick",
-          "b": "An You Ooi"
+          "a": "TBD",
+          "b": "Sai Krishna Sangeetha"
         }
       ],
       [
@@ -347,9 +343,9 @@
       ]
     ],
     "size": 16,
-    "byeCount": 7,
-    "teamCount": 9,
-    "_loserKey": "Ajohn Trinh-Nguyen|Alex Rong|An You Ooi|Christopher Martens|Dhruv Naik|Donovan Dietrick|Mayank Garg|Richard Zhang|Shenglong"
+    "byeCount": 3,
+    "teamCount": 13,
+    "_loserKey": "Ajohn Trinh-Nguyen|Alex Rong|An You Ooi|Aryan Pattu|Christopher Martens|Dhruv Naik|Donovan Dietrick|Hunter Norman|Mayank Garg|Mohit Pathak|Richard Zhang|Sai Krishna Sangeetha|Shenglong"
   },
   "leagueSchedule": null,
   "leagueBestOf": 1,
