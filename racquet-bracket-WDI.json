@@ -127,7 +127,18 @@
       [
         {
           "a": "Nurjahan Sriti / Alpa Nawre",
-          "b": "Jenny Zheng / Sophie Van"
+          "b": "Jenny Zheng / Sophie Van",
+          "scoresA": [
+            21,
+            18,
+            21
+          ],
+          "winner": "a",
+          "scoresB": [
+            7,
+            21,
+            14
+          ]
         }
       ]
     ],
