@@ -286,7 +286,16 @@
       [
         {
           "a": "Emmanuel Debaty",
-          "b": "Yujian Wang"
+          "b": "Yujian Wang",
+          "scoresA": [
+            17,
+            18
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Peter Tang",
@@ -297,7 +306,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Yujian Wang",
           "b": "TBD"
         }
       ]
@@ -427,7 +436,16 @@
         },
         {
           "a": "Richard Zhang",
-          "b": "Sai Krishna Sangeetha"
+          "b": "Sai Krishna Sangeetha",
+          "scoresA": [
+            17,
+            17
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
@@ -437,7 +455,7 @@
         },
         {
           "a": "Dhruv Naik",
-          "b": "TBD"
+          "b": "Sai Krishna Sangeetha"
         }
       ],
       [

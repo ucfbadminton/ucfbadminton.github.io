@@ -29,7 +29,16 @@
         },
         {
           "a": "Hao Nguyen",
-          "b": "Rome Huynh"
+          "b": "Rome Huynh",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            7,
+            14
+          ],
+          "winner": "a"
         }
       ],
       [
@@ -39,7 +48,7 @@
         },
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Hao Nguyen"
         }
       ],
       [
