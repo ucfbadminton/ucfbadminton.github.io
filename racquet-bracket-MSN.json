@@ -142,7 +142,14 @@
       [
         {
           "a": "Nikhil Prakash",
-          "b": "Mohit Pathak"
+          "b": "Mohit Pathak",
+          "scoresA": [
+            27
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "a"
         },
         {
           "a": "Donovan Dietrick",
@@ -190,20 +197,41 @@
         },
         {
           "a": "Peter Tang",
-          "b": "Sai Krishna Sangeetha"
+          "b": "Sai Krishna Sangeetha",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "Hunter Norman",
-          "b": "Xue Yan"
+          "b": "Xue Yan",
+          "scoresA": [
+            7
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "Rumi Barsotti",
-          "b": "Aryan Pattu"
+          "b": "Aryan Pattu",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            22
+          ],
+          "winner": "a"
         }
       ],
       [
         {
-          "a": "TBD",
+          "a": "Nikhil Prakash",
           "b": "Emmanuel Debaty"
         },
         {
@@ -212,11 +240,11 @@
         },
         {
           "a": "Kenneth Wu",
-          "b": "TBD"
+          "b": "Peter Tang"
         },
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Xue Yan",
+          "b": "Rumi Barsotti"
         }
       ],
       [
