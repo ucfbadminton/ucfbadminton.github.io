@@ -300,14 +300,21 @@
         {
           "a": "Peter Tang",
           "b": "Rumi Barsotti",
-          "scoresA": [],
-          "scoresB": []
+          "scoresA": [
+            15,
+            14
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "Yujian Wang",
-          "b": "TBD"
+          "b": "Rumi Barsotti"
         }
       ]
     ],
@@ -419,7 +426,16 @@
         },
         {
           "a": "Ajohn Trinh-Nguyen",
-          "b": "Alex Rong"
+          "b": "Alex Rong",
+          "scoresA": [
+            10,
+            13
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "An You Ooi",
@@ -451,7 +467,7 @@
       [
         {
           "a": "Shenglong",
-          "b": "TBD"
+          "b": "Alex Rong"
         },
         {
           "a": "Dhruv Naik",

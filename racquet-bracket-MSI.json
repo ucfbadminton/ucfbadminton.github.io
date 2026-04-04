@@ -25,7 +25,18 @@
         },
         {
           "a": "Nguyen Khang Vu",
-          "b": "Shakil Sharif"
+          "b": "Shakil Sharif",
+          "scoresA": [
+            19,
+            21,
+            21
+          ],
+          "scoresB": [
+            21,
+            11,
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "Hao Nguyen",
@@ -47,7 +58,7 @@
           "b": "TBD"
         },
         {
-          "a": "TBD",
+          "a": "Nguyen Khang Vu",
           "b": "Hao Nguyen"
         }
       ],
