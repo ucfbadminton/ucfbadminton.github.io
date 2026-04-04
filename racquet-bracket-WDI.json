@@ -15,7 +15,16 @@
       [
         {
           "a": "Jenny Zheng / Sophie Van",
-          "b": "Yushi Huanf / Renee Wan"
+          "b": "Yushi Huanf / Renee Wan",
+          "scoresA": [
+            5,
+            14
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Ivy Hoang / Mary Nguyen",
@@ -34,7 +43,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Yushi Huanf / Renee Wan",
           "b": "Ivy Hoang / Mary Nguyen"
         },
         {

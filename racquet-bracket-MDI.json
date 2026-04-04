@@ -34,7 +34,18 @@
         },
         {
           "a": "Jonathan Van / Trung Van",
-          "b": "Alex Rong / Raghav Gupta"
+          "b": "Alex Rong / Raghav Gupta",
+          "scoresA": [
+            21,
+            20,
+            17
+          ],
+          "scoresB": [
+            11,
+            22,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Mehedi Hossain / Shakil Sharif",
@@ -63,7 +74,7 @@
         },
         {
           "a": "Shan Malhotra / Rome Huynh",
-          "b": "TBD"
+          "b": "Alex Rong / Raghav Gupta"
         },
         {
           "a": "Mehedi Hossain / Shakil Sharif",
@@ -71,7 +82,18 @@
         },
         {
           "a": "Abel Mathew / Fenn Shibu",
-          "b": "Tristan Sookdeo / Safraz Rashdan"
+          "b": "Tristan Sookdeo / Safraz Rashdan",
+          "scoresA": [
+            6,
+            21,
+            12
+          ],
+          "scoresB": [
+            21,
+            19,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
@@ -81,7 +103,7 @@
         },
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Tristan Sookdeo / Safraz Rashdan"
         }
       ],
       [
