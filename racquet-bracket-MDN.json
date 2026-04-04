@@ -150,13 +150,22 @@
         },
         {
           "a": "Sing To / Tony pham",
-          "b": "Xueyan Gao / Xuanlong Yang"
+          "b": "Xueyan Gao / Xuanlong Yang",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            15,
+            17
+          ],
+          "winner": "a"
         }
       ],
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Sing To / Tony pham"
         }
       ]
     ],
@@ -197,7 +206,14 @@
       [
         {
           "a": "Sai Krishna Sangeetha / Nikhil Prakash",
-          "b": "Emmanuel Debaty / Peter Tang"
+          "b": "Emmanuel Debaty / Peter Tang",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            20
+          ],
+          "winner": "a"
         },
         {
           "a": "Hunter Norman / Alejandro Fernandez",
@@ -213,7 +229,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Sai Krishna Sangeetha / Nikhil Prakash",
           "b": "Eric Yau / Richard Zhang"
         }
       ]

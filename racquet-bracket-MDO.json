@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "category": "MD",
+  "level": "O",
+  "teams": [
+    "Thanh Van / Vladimir Sosnin",
+    "Alex wong / Pratush brahma",
+    "Fumiya Kayatani / Aaron Mares"
+  ],
+  "bracket": null,
+  "consolationBracket": null,
+  "leagueSchedule": [
+    [
+      {
+        "a": "Alex wong / Pratush brahma",
+        "b": "Fumiya Kayatani / Aaron Mares",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Thanh Van / Vladimir Sosnin",
+        "b": "Fumiya Kayatani / Aaron Mares",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Thanh Van / Vladimir Sosnin",
+        "b": "Alex wong / Pratush brahma",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  ],
+  "leagueBestOf": 3,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "3"
+}
