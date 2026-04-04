@@ -101,7 +101,18 @@
       [
         {
           "a": "Raghav Gupta",
-          "b": "Hao Nguyen"
+          "b": "Hao Nguyen",
+          "scoresA": [
+            21,
+            18,
+            21
+          ],
+          "scoresB": [
+            16,
+            21,
+            18
+          ],
+          "winner": "a"
         }
       ]
     ],
