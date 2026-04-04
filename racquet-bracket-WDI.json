@@ -85,7 +85,16 @@
       [
         {
           "a": "Yushi Huanf / Renee Wan",
-          "b": "Faye Marie Caayon / Ritika Ghanti"
+          "b": "Faye Marie Caayon / Ritika Ghanti",
+          "scoresA": [
+            7,
+            12
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ]
     ],
@@ -98,7 +107,16 @@
       [
         {
           "a": "Ivy Hoang / Mary Nguyen",
-          "b": "Nurjahan Sriti / Alpa Nawre"
+          "b": "Nurjahan Sriti / Alpa Nawre",
+          "scoresA": [
+            19,
+            18
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Jenny Zheng / Sophie Van",
@@ -108,7 +126,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Nurjahan Sriti / Alpa Nawre",
           "b": "Jenny Zheng / Sophie Van"
         }
       ]

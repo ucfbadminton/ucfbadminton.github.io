@@ -161,13 +161,22 @@
         },
         {
           "a": "Peter Xiao / Marko Martincevic",
-          "b": "Tristan Sookdeo / Safraz Rashdan"
+          "b": "Tristan Sookdeo / Safraz Rashdan",
+          "scoresA": [
+            17,
+            15
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "Tianxingjian Ding / Boning Sima",
-          "b": "TBD"
+          "b": "Tristan Sookdeo / Safraz Rashdan"
         }
       ]
     ],
@@ -203,8 +212,13 @@
         {
           "a": "Danny Ng / Mohit Pathak",
           "b": "Shyam Akavaram / Alec Kwan",
-          "scoresA": [],
-          "scoresB": []
+          "scoresA": [
+            13
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "Jonathan Van / Trung Van",
@@ -220,8 +234,15 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Jonathan Van / Trung Van"
+          "a": "Shyam Akavaram / Alec Kwan",
+          "b": "Jonathan Van / Trung Van",
+          "scoresA": [
+            25
+          ],
+          "winner": "b",
+          "scoresB": [
+            27
+          ]
         }
       ]
     ],
