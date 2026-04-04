@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "category": "MS",
+  "level": "I",
+  "teams": [
+    "Hemanth Gunduboina",
+    "Nguyen Khang Vu",
+    "Raghav Gupta",
+    "Hao Nguyen",
+    "Rome Huynh",
+    "Taha Zafar",
+    "Mehedi Hossain",
+    "Shakil Sharif"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Hemanth Gunduboina",
+          "b": "Taha Zafar"
+        },
+        {
+          "a": "Mehedi Hossain",
+          "b": "Raghav Gupta"
+        },
+        {
+          "a": "Nguyen Khang Vu",
+          "b": "Shakil Sharif"
+        },
+        {
+          "a": "Hao Nguyen",
+          "b": "Rome Huynh"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 8,
+    "byeCount": 0,
+    "teamCount": 8
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}

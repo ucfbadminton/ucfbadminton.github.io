@@ -328,7 +328,18 @@
         },
         {
           "a": "Christopher Martens",
-          "b": "Richard Zhang"
+          "b": "Richard Zhang",
+          "scoresA": [
+            21,
+            18,
+            19
+          ],
+          "scoresB": [
+            18,
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Sai Krishna Sangeetha",
@@ -350,7 +361,7 @@
           "b": "Dhruv Naik"
         },
         {
-          "a": "TBD",
+          "a": "Richard Zhang",
           "b": "Sai Krishna Sangeetha"
         }
       ],
