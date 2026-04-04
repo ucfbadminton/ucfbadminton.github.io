@@ -86,13 +86,22 @@
         },
         {
           "a": "Nguyen Khang Vu",
-          "b": "Hao Nguyen"
+          "b": "Hao Nguyen",
+          "scoresA": [
+            3,
+            7
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "Raghav Gupta",
-          "b": "TBD"
+          "b": "Hao Nguyen"
         }
       ]
     ],
