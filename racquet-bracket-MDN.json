@@ -246,7 +246,14 @@
       [
         {
           "a": "Sai Krishna Sangeetha / Nikhil Prakash",
-          "b": "Eric Yau / Richard Zhang"
+          "b": "Eric Yau / Richard Zhang",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            12
+          ],
+          "winner": "a"
         }
       ]
     ],
