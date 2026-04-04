@@ -55,7 +55,16 @@
       [
         {
           "a": "Yushi Huanf / Renee Wan",
-          "b": "Ivy Hoang / Mary Nguyen"
+          "b": "Ivy Hoang / Mary Nguyen",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            8,
+            11
+          ],
+          "winner": "a"
         },
         {
           "a": "Harshitha Sathees Kumar / Ria Balwalli",
@@ -66,7 +75,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Yushi Huanf / Renee Wan",
           "b": "TBD"
         }
       ]
@@ -79,15 +88,26 @@
     "rounds": [
       [
         {
-          "a": "Jenny Zheng / Sophie Van",
+          "a": "Ivy Hoang / Mary Nguyen",
           "b": "Nurjahan Sriti / Alpa Nawre"
+        },
+        {
+          "a": "Jenny Zheng / Sophie Van",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Jenny Zheng / Sophie Van"
         }
       ]
     ],
-    "size": 2,
-    "byeCount": 0,
-    "teamCount": 2,
-    "_loserKey": "Jenny Zheng / Sophie Van|Nurjahan Sriti / Alpa Nawre"
+    "size": 4,
+    "byeCount": 1,
+    "teamCount": 3,
+    "_loserKey": "Ivy Hoang / Mary Nguyen|Jenny Zheng / Sophie Van|Nurjahan Sriti / Alpa Nawre"
   },
   "leagueSchedule": null,
   "leagueBestOf": 1,

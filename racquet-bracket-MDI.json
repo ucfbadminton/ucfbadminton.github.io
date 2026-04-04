@@ -105,7 +105,16 @@
         },
         {
           "a": "Shan Malhotra / Rome Huynh",
-          "b": "Alex Rong / Raghav Gupta"
+          "b": "Alex Rong / Raghav Gupta",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            11,
+            13
+          ],
+          "winner": "a"
         },
         {
           "a": "Mehedi Hossain / Shakil Sharif",
@@ -139,7 +148,7 @@
       [
         {
           "a": "Tianxingjian Ding / Boning Sima",
-          "b": "TBD"
+          "b": "Shan Malhotra / Rome Huynh"
         },
         {
           "a": "Peter Xiao / Marko Martincevic",
@@ -162,7 +171,8 @@
       [
         {
           "a": "Mehedi Hossain / Shakil Sharif",
-          "b": "Danny Ng / Mohit Pathak"
+          "b": "Danny Ng / Mohit Pathak",
+          "winner": "b"
         },
         {
           "a": "BYE",
@@ -182,8 +192,10 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Shyam Akavaram / Alec Kwan"
+          "a": "Danny Ng / Mohit Pathak",
+          "b": "Shyam Akavaram / Alec Kwan",
+          "scoresA": [],
+          "scoresB": []
         },
         {
           "a": "Jonathan Van / Trung Van",
