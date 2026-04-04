@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "category": "XD",
+  "level": "N",
+  "teams": [
+    "Alec Kwan / Ivy Hoang",
+    "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
+    "Gregory Day / Huien kalanik",
+    "Shan Malhotra / Mary Nguyen",
+    "Tony Pham / Rachel Huang"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Tony Pham / Rachel Huang",
+          "b": "Alec Kwan / Ivy Hoang"
+        },
+        {
+          "a": "BYE",
+          "b": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Shan Malhotra / Mary Nguyen",
+          "winner": "b"
+        },
+        {
+          "a": "Gregory Day / Huien kalanik",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala"
+        },
+        {
+          "a": "Shan Malhotra / Mary Nguyen",
+          "b": "Gregory Day / Huien kalanik"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 8,
+    "byeCount": 3,
+    "teamCount": 5
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}
