@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "category": "MD",
+  "level": "N",
+  "teams": [
+    "Yujian Wang / Naiqiu Zhan",
+    "Emmanuel Debaty / Peter Tang",
+    "Vikas Pattu / Aryan Pattu",
+    "Yuanseng Choo / Liangji Zhu",
+    "Sai Krishna Sangeetha / Nikhil Prakash",
+    "Kenneth Wu / Mayank Garg",
+    "Eric Yau / Richard Zhang",
+    "Xueyan Gao / Xuanlong Yang",
+    "Darren chen / Brandon Jaegers",
+    "Sing To / Tony pham",
+    "Hunter Norman / Alejandro Fernandez"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Yuanseng Choo / Liangji Zhu",
+          "b": "Kenneth Wu / Mayank Garg"
+        },
+        {
+          "a": "BYE",
+          "b": "Yujian Wang / Naiqiu Zhan",
+          "winner": "b"
+        },
+        {
+          "a": "Eric Yau / Richard Zhang",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Darren chen / Brandon Jaegers",
+          "b": "Emmanuel Debaty / Peter Tang"
+        },
+        {
+          "a": "Sing To / Tony pham",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Vikas Pattu / Aryan Pattu",
+          "b": "Hunter Norman / Alejandro Fernandez"
+        },
+        {
+          "a": "BYE",
+          "b": "Sai Krishna Sangeetha / Nikhil Prakash",
+          "winner": "b"
+        },
+        {
+          "a": "Xueyan Gao / Xuanlong Yang",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Yujian Wang / Naiqiu Zhan"
+        },
+        {
+          "a": "Eric Yau / Richard Zhang",
+          "b": "TBD"
+        },
+        {
+          "a": "Sing To / Tony pham",
+          "b": "TBD"
+        },
+        {
+          "a": "Sai Krishna Sangeetha / Nikhil Prakash",
+          "b": "Xueyan Gao / Xuanlong Yang"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 16,
+    "byeCount": 5,
+    "teamCount": 11
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}

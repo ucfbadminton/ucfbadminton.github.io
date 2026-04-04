@@ -46,13 +46,13 @@
         "a": "Abel Mathew",
         "b": "Krishna Balwalli",
         "scoresA": [
-          null,
-          null,
+          18,
+          21,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          12,
+          21,
           null
         ]
       },
@@ -60,13 +60,13 @@
         "a": "Marko Martincevic",
         "b": "Vladimir Sosnin",
         "scoresA": [
-          null,
-          null,
+          9,
+          19,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          21,
+          21,
           null
         ]
       }
@@ -103,7 +103,7 @@
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 2,
+  "leagueActiveDay": 1,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
