@@ -148,7 +148,16 @@
       [
         {
           "a": "Tianxingjian Ding / Boning Sima",
-          "b": "Shan Malhotra / Rome Huynh"
+          "b": "Shan Malhotra / Rome Huynh",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            10,
+            14
+          ],
+          "winner": "a"
         },
         {
           "a": "Peter Xiao / Marko Martincevic",
@@ -157,7 +166,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Tianxingjian Ding / Boning Sima",
           "b": "TBD"
         }
       ]
@@ -199,13 +208,20 @@
         },
         {
           "a": "Jonathan Van / Trung Van",
-          "b": "Abel Mathew / Fenn Shibu"
+          "b": "Abel Mathew / Fenn Shibu",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            18
+          ],
+          "winner": "a"
         }
       ],
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Jonathan Van / Trung Van"
         }
       ]
     ],
