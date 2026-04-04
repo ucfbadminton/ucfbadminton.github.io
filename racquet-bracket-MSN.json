@@ -232,29 +232,67 @@
       [
         {
           "a": "Nikhil Prakash",
-          "b": "Emmanuel Debaty"
+          "b": "Emmanuel Debaty",
+          "scoresA": [
+            7,
+            15
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Yujian Wang",
-          "b": "Xuanlong Yang"
+          "b": "Xuanlong Yang",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            15,
+            1
+          ],
+          "winner": "a"
         },
         {
           "a": "Kenneth Wu",
-          "b": "Peter Tang"
+          "b": "Peter Tang",
+          "scoresA": [
+            10,
+            13
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Xue Yan",
-          "b": "Rumi Barsotti"
+          "b": "Rumi Barsotti",
+          "winner": "b",
+          "scoresA": [
+            18,
+            13
+          ],
+          "scoresB": [
+            21,
+            21
+          ]
         }
       ],
       [
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Emmanuel Debaty",
+          "b": "Yujian Wang"
         },
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Peter Tang",
+          "b": "Rumi Barsotti",
+          "scoresA": [],
+          "scoresB": []
         }
       ],
       [
@@ -306,7 +344,16 @@
         },
         {
           "a": "Alex Rong",
-          "b": "Mohit Pathak"
+          "b": "Mohit Pathak",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            19,
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "An You Ooi",
@@ -350,15 +397,33 @@
       [
         {
           "a": "Shenglong",
-          "b": "Mayank Garg"
+          "b": "Mayank Garg",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            17,
+            11
+          ],
+          "winner": "a"
         },
         {
           "a": "Ajohn Trinh-Nguyen",
-          "b": "TBD"
+          "b": "Alex Rong"
         },
         {
           "a": "An You Ooi",
-          "b": "Dhruv Naik"
+          "b": "Dhruv Naik",
+          "scoresA": [
+            6,
+            3
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Richard Zhang",
@@ -367,11 +432,11 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Shenglong",
           "b": "TBD"
         },
         {
-          "a": "TBD",
+          "a": "Dhruv Naik",
           "b": "TBD"
         }
       ],
