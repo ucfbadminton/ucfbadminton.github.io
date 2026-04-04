@@ -277,7 +277,15 @@
         },
         {
           "a": "Mayank Garg",
-          "b": "Donovan Dietrick"
+          "b": "Donovan Dietrick",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            9,
+            11
+          ]
         },
         {
           "a": "BYE",
