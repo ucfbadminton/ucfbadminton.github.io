@@ -90,7 +90,18 @@
       [
         {
           "a": "Md Khairul Hasan / Md Touhidul Islam",
-          "b": "Tianxingjian Ding / Boning Sima"
+          "b": "Tianxingjian Ding / Boning Sima",
+          "scoresA": [
+            12,
+            21,
+            13
+          ],
+          "scoresB": [
+            21,
+            17,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Shan Malhotra / Rome Huynh",
@@ -98,7 +109,16 @@
         },
         {
           "a": "Mehedi Hossain / Shakil Sharif",
-          "b": "Peter Xiao / Marko Martincevic"
+          "b": "Peter Xiao / Marko Martincevic",
+          "scoresA": [
+            16,
+            18
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Abel Mathew / Fenn Shibu",
@@ -118,11 +138,11 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Tianxingjian Ding / Boning Sima",
           "b": "TBD"
         },
         {
-          "a": "TBD",
+          "a": "Peter Xiao / Marko Martincevic",
           "b": "Tristan Sookdeo / Safraz Rashdan"
         }
       ],
@@ -137,7 +157,51 @@
     "byeCount": 5,
     "teamCount": 11
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Mehedi Hossain / Shakil Sharif",
+          "b": "Danny Ng / Mohit Pathak"
+        },
+        {
+          "a": "BYE",
+          "b": "Shyam Akavaram / Alec Kwan",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Jonathan Van / Trung Van",
+          "winner": "b"
+        },
+        {
+          "a": "Abel Mathew / Fenn Shibu",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Shyam Akavaram / Alec Kwan"
+        },
+        {
+          "a": "Jonathan Van / Trung Van",
+          "b": "Abel Mathew / Fenn Shibu"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 8,
+    "byeCount": 3,
+    "teamCount": 5,
+    "_loserKey": "Abel Mathew / Fenn Shibu|Danny Ng / Mohit Pathak|Jonathan Van / Trung Van|Mehedi Hossain / Shakil Sharif|Shyam Akavaram / Alec Kwan"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,

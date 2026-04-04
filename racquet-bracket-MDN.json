@@ -145,8 +145,15 @@
         {
           "a": "Yujian Wang / Naiqiu Zhan",
           "b": "Darren chen / Brandon Jaegers",
-          "scoresA": [],
-          "scoresB": []
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            14,
+            17
+          ],
+          "winner": "a"
         },
         {
           "a": "Sing To / Tony pham",
@@ -164,7 +171,7 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Yujian Wang / Naiqiu Zhan",
           "b": "Sing To / Tony pham"
         }
       ]
