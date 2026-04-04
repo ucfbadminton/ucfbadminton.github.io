@@ -90,20 +90,20 @@
         "a": "Natcha Taweesuk",
         "b": "Savannah Bourget",
         "scoresA": [
-          null,
-          null,
+          11,
+          9,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          21,
+          21,
           null
         ]
       }
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 1,
+  "leagueActiveDay": 2,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
