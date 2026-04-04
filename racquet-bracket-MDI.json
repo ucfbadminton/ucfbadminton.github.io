@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "category": "MD",
+  "level": "I",
+  "teams": [
+    "Tristan Sookdeo / Safraz Rashdan",
+    "Alex Rong / Raghav Gupta",
+    "Jonathan Van / Trung Van",
+    "Peter Xiao / Marko Martincevic",
+    "Tianxingjian Ding / Boning Sima",
+    "Md Khairul Hasan / Md Touhidul Islam",
+    "Shan Malhotra / Rome Huynh",
+    "Shyam Akavaram / Alec Kwan",
+    "Mehedi Hossain / Shakil Sharif",
+    "Danny Ng / Mohit Pathak",
+    "Abel Mathew / Fenn Shibu"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Md Khairul Hasan / Md Touhidul Islam",
+          "b": "Danny Ng / Mohit Pathak"
+        },
+        {
+          "a": "BYE",
+          "b": "Tianxingjian Ding / Boning Sima",
+          "winner": "b"
+        },
+        {
+          "a": "Shan Malhotra / Rome Huynh",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Jonathan Van / Trung Van",
+          "b": "Alex Rong / Raghav Gupta"
+        },
+        {
+          "a": "Mehedi Hossain / Shakil Sharif",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Shyam Akavaram / Alec Kwan",
+          "b": "Peter Xiao / Marko Martincevic"
+        },
+        {
+          "a": "BYE",
+          "b": "Abel Mathew / Fenn Shibu",
+          "winner": "b"
+        },
+        {
+          "a": "Tristan Sookdeo / Safraz Rashdan",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Tianxingjian Ding / Boning Sima"
+        },
+        {
+          "a": "Shan Malhotra / Rome Huynh",
+          "b": "TBD"
+        },
+        {
+          "a": "Mehedi Hossain / Shakil Sharif",
+          "b": "TBD"
+        },
+        {
+          "a": "Abel Mathew / Fenn Shibu",
+          "b": "Tristan Sookdeo / Safraz Rashdan"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 16,
+    "byeCount": 5,
+    "teamCount": 11
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}

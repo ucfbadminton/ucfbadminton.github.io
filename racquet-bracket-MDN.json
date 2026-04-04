@@ -20,7 +20,16 @@
       [
         {
           "a": "Yuanseng Choo / Liangji Zhu",
-          "b": "Kenneth Wu / Mayank Garg"
+          "b": "Kenneth Wu / Mayank Garg",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            9,
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -34,7 +43,16 @@
         },
         {
           "a": "Darren chen / Brandon Jaegers",
-          "b": "Emmanuel Debaty / Peter Tang"
+          "b": "Emmanuel Debaty / Peter Tang",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            13,
+            10
+          ],
+          "winner": "a"
         },
         {
           "a": "Sing To / Tony pham",
@@ -43,7 +61,16 @@
         },
         {
           "a": "Vikas Pattu / Aryan Pattu",
-          "b": "Hunter Norman / Alejandro Fernandez"
+          "b": "Hunter Norman / Alejandro Fernandez",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            6,
+            4
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -58,30 +85,52 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Yujian Wang / Naiqiu Zhan"
+          "a": "Yuanseng Choo / Liangji Zhu",
+          "b": "Yujian Wang / Naiqiu Zhan",
+          "scoresA": [
+            21,
+            16,
+            21
+          ],
+          "scoresB": [
+            19,
+            21,
+            17
+          ],
+          "winner": "a"
         },
         {
           "a": "Eric Yau / Richard Zhang",
-          "b": "TBD"
+          "b": "Darren chen / Brandon Jaegers"
         },
         {
           "a": "Sing To / Tony pham",
-          "b": "TBD"
+          "b": "Vikas Pattu / Aryan Pattu"
         },
         {
           "a": "Sai Krishna Sangeetha / Nikhil Prakash",
-          "b": "Xueyan Gao / Xuanlong Yang"
+          "b": "Xueyan Gao / Xuanlong Yang",
+          "scoresA": [
+            15,
+            21,
+            13
+          ],
+          "scoresB": [
+            21,
+            13,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
-          "a": "TBD",
+          "a": "Yuanseng Choo / Liangji Zhu",
           "b": "TBD"
         },
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Xueyan Gao / Xuanlong Yang"
         }
       ],
       [
@@ -95,7 +144,51 @@
     "byeCount": 5,
     "teamCount": 11
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Hunter Norman / Alejandro Fernandez",
+          "b": "Yujian Wang / Naiqiu Zhan"
+        },
+        {
+          "a": "BYE",
+          "b": "Kenneth Wu / Mayank Garg",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Sai Krishna Sangeetha / Nikhil Prakash",
+          "winner": "b"
+        },
+        {
+          "a": "Emmanuel Debaty / Peter Tang",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Kenneth Wu / Mayank Garg"
+        },
+        {
+          "a": "Sai Krishna Sangeetha / Nikhil Prakash",
+          "b": "Emmanuel Debaty / Peter Tang"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 8,
+    "byeCount": 3,
+    "teamCount": 5,
+    "_loserKey": "Emmanuel Debaty / Peter Tang|Hunter Norman / Alejandro Fernandez|Kenneth Wu / Mayank Garg|Sai Krishna Sangeetha / Nikhil Prakash|Yujian Wang / Naiqiu Zhan"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,

@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "category": "WD",
+  "level": "I",
+  "teams": [
+    "Ivy Hoang / Mary Nguyen",
+    "Jenny Zheng / Sophie Van",
+    "Nurjahan Sriti / Alpa Nawre",
+    "Faye Marie Caayon / Ritika Ghanti",
+    "Harshitha Sathees Kumar / Ria Balwalli",
+    "Yushi Huanf / Renee Wan"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Jenny Zheng / Sophie Van",
+          "b": "Yushi Huanf / Renee Wan"
+        },
+        {
+          "a": "Ivy Hoang / Mary Nguyen",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Harshitha Sathees Kumar / Ria Balwalli",
+          "b": "Nurjahan Sriti / Alpa Nawre"
+        },
+        {
+          "a": "Faye Marie Caayon / Ritika Ghanti",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Ivy Hoang / Mary Nguyen"
+        },
+        {
+          "a": "TBD",
+          "b": "Faye Marie Caayon / Ritika Ghanti"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 8,
+    "byeCount": 2,
+    "teamCount": 6
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}
