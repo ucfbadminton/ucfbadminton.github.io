@@ -69,14 +69,23 @@
         {
           "a": "Harshitha Sathees Kumar / Ria Balwalli",
           "b": "Faye Marie Caayon / Ritika Ghanti",
-          "scoresA": [],
-          "scoresB": []
+          "scoresA": [
+            22,
+            8,
+            17
+          ],
+          "scoresB": [
+            20,
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "Yushi Huanf / Renee Wan",
-          "b": "TBD"
+          "b": "Faye Marie Caayon / Ritika Ghanti"
         }
       ]
     ],

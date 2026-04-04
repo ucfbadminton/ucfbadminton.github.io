@@ -172,7 +172,16 @@
       [
         {
           "a": "Yujian Wang / Naiqiu Zhan",
-          "b": "Sing To / Tony pham"
+          "b": "Sing To / Tony pham",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            18,
+            19
+          ],
+          "winner": "a"
         }
       ]
     ],
