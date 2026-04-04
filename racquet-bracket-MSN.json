@@ -273,7 +273,18 @@
       [
         {
           "a": "Aryan Pattu",
-          "b": "Shenglong"
+          "b": "Shenglong",
+          "scoresA": [
+            21,
+            17,
+            17
+          ],
+          "scoresB": [
+            17,
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Mayank Garg",
@@ -285,7 +296,8 @@
           "scoresB": [
             9,
             11
-          ]
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -298,7 +310,16 @@
         },
         {
           "a": "An You Ooi",
-          "b": "Hunter Norman"
+          "b": "Hunter Norman",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            17,
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -317,15 +338,15 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Shenglong",
+          "b": "Mayank Garg"
         },
         {
           "a": "Ajohn Trinh-Nguyen",
           "b": "TBD"
         },
         {
-          "a": "TBD",
+          "a": "An You Ooi",
           "b": "Dhruv Naik"
         },
         {
