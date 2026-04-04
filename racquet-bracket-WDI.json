@@ -33,7 +33,18 @@
         },
         {
           "a": "Harshitha Sathees Kumar / Ria Balwalli",
-          "b": "Nurjahan Sriti / Alpa Nawre"
+          "b": "Nurjahan Sriti / Alpa Nawre",
+          "scoresA": [
+            21,
+            17,
+            21
+          ],
+          "scoresB": [
+            17,
+            21,
+            15
+          ],
+          "winner": "a"
         },
         {
           "a": "Faye Marie Caayon / Ritika Ghanti",
@@ -47,8 +58,10 @@
           "b": "Ivy Hoang / Mary Nguyen"
         },
         {
-          "a": "TBD",
-          "b": "Faye Marie Caayon / Ritika Ghanti"
+          "a": "Harshitha Sathees Kumar / Ria Balwalli",
+          "b": "Faye Marie Caayon / Ritika Ghanti",
+          "scoresA": [],
+          "scoresB": []
         }
       ],
       [
@@ -62,7 +75,20 @@
     "byeCount": 2,
     "teamCount": 6
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Jenny Zheng / Sophie Van",
+          "b": "Nurjahan Sriti / Alpa Nawre"
+        }
+      ]
+    ],
+    "size": 2,
+    "byeCount": 0,
+    "teamCount": 2,
+    "_loserKey": "Jenny Zheng / Sophie Van|Nurjahan Sriti / Alpa Nawre"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,

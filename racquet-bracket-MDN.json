@@ -169,7 +169,14 @@
       [
         {
           "a": "Sai Krishna Sangeetha / Nikhil Prakash",
-          "b": "Kenneth Wu / Mayank Garg"
+          "b": "Kenneth Wu / Mayank Garg",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            23
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -189,18 +196,25 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Sai Krishna Sangeetha / Nikhil Prakash",
           "b": "Emmanuel Debaty / Peter Tang"
         },
         {
           "a": "Hunter Norman / Alejandro Fernandez",
-          "b": "Eric Yau / Richard Zhang"
+          "b": "Eric Yau / Richard Zhang",
+          "scoresA": [
+            21
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Eric Yau / Richard Zhang"
         }
       ]
     ],
