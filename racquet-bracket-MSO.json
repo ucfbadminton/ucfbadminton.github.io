@@ -47,11 +47,11 @@
         "b": "Krishna Balwalli",
         "scoresA": [
           18,
-          21,
+          12,
           null
         ],
         "scoresB": [
-          12,
+          21,
           21,
           null
         ]
@@ -103,7 +103,7 @@
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 0,
+  "leagueActiveDay": 1,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
