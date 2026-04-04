@@ -17,11 +17,29 @@
       [
         {
           "a": "Hemanth Gunduboina",
-          "b": "Taha Zafar"
+          "b": "Taha Zafar",
+          "scoresA": [
+            15,
+            16
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Mehedi Hossain",
-          "b": "Raghav Gupta"
+          "b": "Raghav Gupta",
+          "scoresA": [
+            9,
+            13
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         },
         {
           "a": "Nguyen Khang Vu",
@@ -54,8 +72,8 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Taha Zafar",
+          "b": "Raghav Gupta"
         },
         {
           "a": "Nguyen Khang Vu",

@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "category": "WS",
+  "level": "I",
+  "teams": [
+    "Vaidehi Saini",
+    "Harshitha Sathees Kumar",
+    "Ria Balwalli"
+  ],
+  "bracket": null,
+  "consolationBracket": null,
+  "leagueSchedule": [
+    [
+      {
+        "a": "Harshitha Sathees Kumar",
+        "b": "Ria Balwalli",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Vaidehi Saini",
+        "b": "Ria Balwalli",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Vaidehi Saini",
+        "b": "Harshitha Sathees Kumar",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  ],
+  "leagueBestOf": 3,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "3"
+}

@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "category": "MS",
+  "level": "O",
+  "teams": [
+    "Abel Mathew",
+    "Vladimir Sosnin",
+    "Krishna Balwalli",
+    "Marko Martincevic"
+  ],
+  "bracket": null,
+  "consolationBracket": null,
+  "leagueSchedule": [
+    [
+      {
+        "a": "Abel Mathew",
+        "b": "Marko Martincevic",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Vladimir Sosnin",
+        "b": "Krishna Balwalli",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Abel Mathew",
+        "b": "Krishna Balwalli",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Marko Martincevic",
+        "b": "Vladimir Sosnin",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    [
+      {
+        "a": "Abel Mathew",
+        "b": "Vladimir Sosnin",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "a": "Krishna Balwalli",
+        "b": "Marko Martincevic",
+        "scoresA": [
+          null,
+          null,
+          null
+        ],
+        "scoresB": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  ],
+  "leagueBestOf": 3,
+  "leagueActiveDay": 2,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "3"
+}
