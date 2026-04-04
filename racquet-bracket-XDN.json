@@ -39,13 +39,22 @@
         },
         {
           "a": "Gregory Day / Huien kalanik",
-          "b": "Tony Pham / Rachel Huang"
+          "b": "Tony Pham / Rachel Huang",
+          "scoresA": [
+            12,
+            15
+          ],
+          "scoresB": [
+            21,
+            21
+          ],
+          "winner": "b"
         }
       ],
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Tony Pham / Rachel Huang"
         }
       ]
     ],
