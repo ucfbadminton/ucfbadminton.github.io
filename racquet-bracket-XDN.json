@@ -46,7 +46,16 @@
       [
         {
           "a": "Shan Malhotra / Mary Nguyen",
-          "b": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala"
+          "b": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            16,
+            18
+          ],
+          "winner": "a"
         },
         {
           "a": "Gregory Day / Huien kalanik",
@@ -64,8 +73,17 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Tony Pham / Rachel Huang"
+          "a": "Shan Malhotra / Mary Nguyen",
+          "b": "Tony Pham / Rachel Huang",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            11,
+            16
+          ],
+          "winner": "a"
         }
       ]
     ],
@@ -73,7 +91,40 @@
     "byeCount": 3,
     "teamCount": 5
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
+          "b": "Gregory Day / Huien kalanik",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            14,
+            15
+          ],
+          "winner": "a"
+        },
+        {
+          "a": "Alec Kwan / Ivy Hoang",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
+          "b": "Alec Kwan / Ivy Hoang"
+        }
+      ]
+    ],
+    "size": 4,
+    "byeCount": 1,
+    "teamCount": 3,
+    "_loserKey": "Alec Kwan / Ivy Hoang|Gregory Day / Huien kalanik|Sai Krishna Sangeetha / Anuradha Sahithi Padavala"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,
