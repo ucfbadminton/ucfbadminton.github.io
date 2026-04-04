@@ -119,7 +119,14 @@
         },
         {
           "a": "Xue Yan",
-          "b": "Dhruv Naik"
+          "b": "Dhruv Naik",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            17
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -140,20 +147,46 @@
         {
           "a": "Donovan Dietrick",
           "b": "Emmanuel Debaty",
-          "scoresA": [],
-          "scoresB": []
+          "scoresA": [
+            6
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "Ajohn Trinh-Nguyen",
-          "b": "Yujian Wang"
+          "b": "Yujian Wang",
+          "scoresA": [
+            15
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "Xuanlong Yang",
-          "b": "Shenglong"
+          "b": "Shenglong",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            21
+          ],
+          "winner": "a"
         },
         {
           "a": "Kenneth Wu",
-          "b": "Christopher Martens"
+          "b": "Christopher Martens",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            20
+          ],
+          "winner": "a"
         },
         {
           "a": "Peter Tang",
@@ -161,7 +194,7 @@
         },
         {
           "a": "Hunter Norman",
-          "b": "TBD"
+          "b": "Xue Yan"
         },
         {
           "a": "Rumi Barsotti",
@@ -171,14 +204,14 @@
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Emmanuel Debaty"
         },
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Yujian Wang",
+          "b": "Xuanlong Yang"
         },
         {
-          "a": "TBD",
+          "a": "Kenneth Wu",
           "b": "TBD"
         },
         {
@@ -207,7 +240,89 @@
     "byeCount": 11,
     "teamCount": 21
   },
-  "consolationBracket": null,
+  "consolationBracket": {
+    "rounds": [
+      [
+        {
+          "a": "Christopher Martens",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Shenglong",
+          "b": "Mayank Garg"
+        },
+        {
+          "a": "BYE",
+          "b": "Richard Zhang",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Alex Rong",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Dhruv Naik",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Ajohn Trinh-Nguyen",
+          "winner": "b"
+        },
+        {
+          "a": "Donovan Dietrick",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "An You Ooi",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "Christopher Martens",
+          "b": "TBD"
+        },
+        {
+          "a": "Richard Zhang",
+          "b": "Alex Rong"
+        },
+        {
+          "a": "Dhruv Naik",
+          "b": "Ajohn Trinh-Nguyen"
+        },
+        {
+          "a": "Donovan Dietrick",
+          "b": "An You Ooi"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 16,
+    "byeCount": 7,
+    "teamCount": 9,
+    "_loserKey": "Ajohn Trinh-Nguyen|Alex Rong|An You Ooi|Christopher Martens|Dhruv Naik|Donovan Dietrick|Mayank Garg|Richard Zhang|Shenglong"
+  },
   "leagueSchedule": null,
   "leagueBestOf": 1,
   "leagueActiveDay": 0,
