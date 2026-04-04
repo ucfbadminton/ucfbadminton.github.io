@@ -30,7 +30,14 @@
       [
         {
           "a": "Richard Zhang",
-          "b": "Nikhil Prakash"
+          "b": "Nikhil Prakash",
+          "scoresA": [
+            14
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "BYE",
@@ -44,7 +51,14 @@
         },
         {
           "a": "Emmanuel Debaty",
-          "b": "Alex Rong"
+          "b": "Alex Rong",
+          "scoresA": [
+            25
+          ],
+          "winner": "a",
+          "scoresB": [
+            20
+          ]
         },
         {
           "a": "BYE",
@@ -58,7 +72,14 @@
         },
         {
           "a": "An You Ooi",
-          "b": "Xuanlong Yang"
+          "b": "Xuanlong Yang",
+          "scoresA": [
+            10
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "BYE",
@@ -77,7 +98,14 @@
         },
         {
           "a": "Peter Tang",
-          "b": "Mayank Garg"
+          "b": "Mayank Garg",
+          "scoresA": [
+            25
+          ],
+          "scoresB": [
+            10
+          ],
+          "winner": "a"
         },
         {
           "a": "BYE",
@@ -106,19 +134,21 @@
       ],
       [
         {
-          "a": "TBD",
+          "a": "Nikhil Prakash",
           "b": "Mohit Pathak"
         },
         {
           "a": "Donovan Dietrick",
-          "b": "TBD"
+          "b": "Emmanuel Debaty",
+          "scoresA": [],
+          "scoresB": []
         },
         {
           "a": "Ajohn Trinh-Nguyen",
           "b": "Yujian Wang"
         },
         {
-          "a": "TBD",
+          "a": "Xuanlong Yang",
           "b": "Shenglong"
         },
         {
@@ -126,7 +156,7 @@
           "b": "Christopher Martens"
         },
         {
-          "a": "TBD",
+          "a": "Peter Tang",
           "b": "Sai Krishna Sangeetha"
         },
         {
