@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "category": "MS",
+  "level": "N",
+  "teams": [
+    "Peter Tang",
+    "Shenglong",
+    "Yujian Wang",
+    "Emmanuel Debaty",
+    "Aryan Pattu",
+    "Alex Rong",
+    "Mohit Pathak",
+    "Sai Krishna Sangeetha",
+    "Nikhil Prakash",
+    "Rumi Barsotti",
+    "Ajohn Trinh-Nguyen",
+    "Christopher Martens",
+    "Donovan Dietrick",
+    "Kenneth Wu",
+    "Dhruv Naik",
+    "An You Ooi",
+    "Mayank Garg",
+    "Richard Zhang",
+    "Xuanlong Yang",
+    "Hunter Norman",
+    "Xue Yan"
+  ],
+  "bracket": {
+    "rounds": [
+      [
+        {
+          "a": "Richard Zhang",
+          "b": "Nikhil Prakash"
+        },
+        {
+          "a": "BYE",
+          "b": "Mohit Pathak",
+          "winner": "b"
+        },
+        {
+          "a": "Donovan Dietrick",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Emmanuel Debaty",
+          "b": "Alex Rong"
+        },
+        {
+          "a": "BYE",
+          "b": "Ajohn Trinh-Nguyen",
+          "winner": "b"
+        },
+        {
+          "a": "Yujian Wang",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "An You Ooi",
+          "b": "Xuanlong Yang"
+        },
+        {
+          "a": "BYE",
+          "b": "Shenglong",
+          "winner": "b"
+        },
+        {
+          "a": "BYE",
+          "b": "Kenneth Wu",
+          "winner": "b"
+        },
+        {
+          "a": "Christopher Martens",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Peter Tang",
+          "b": "Mayank Garg"
+        },
+        {
+          "a": "BYE",
+          "b": "Sai Krishna Sangeetha",
+          "winner": "b"
+        },
+        {
+          "a": "Hunter Norman",
+          "b": "BYE",
+          "winner": "a"
+        },
+        {
+          "a": "Xue Yan",
+          "b": "Dhruv Naik"
+        },
+        {
+          "a": "BYE",
+          "b": "Rumi Barsotti",
+          "winner": "b"
+        },
+        {
+          "a": "Aryan Pattu",
+          "b": "BYE",
+          "winner": "a"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "Mohit Pathak"
+        },
+        {
+          "a": "Donovan Dietrick",
+          "b": "TBD"
+        },
+        {
+          "a": "Ajohn Trinh-Nguyen",
+          "b": "Yujian Wang"
+        },
+        {
+          "a": "TBD",
+          "b": "Shenglong"
+        },
+        {
+          "a": "Kenneth Wu",
+          "b": "Christopher Martens"
+        },
+        {
+          "a": "TBD",
+          "b": "Sai Krishna Sangeetha"
+        },
+        {
+          "a": "Hunter Norman",
+          "b": "TBD"
+        },
+        {
+          "a": "Rumi Barsotti",
+          "b": "Aryan Pattu"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        },
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
+        }
+      ]
+    ],
+    "size": 32,
+    "byeCount": 11,
+    "teamCount": 21
+  },
+  "consolationBracket": null,
+  "leagueSchedule": null,
+  "leagueBestOf": 1,
+  "leagueActiveDay": 0,
+  "leagueRounds": "1",
+  "leagueBestOfSel": "1"
+}
