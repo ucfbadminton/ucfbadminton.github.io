@@ -76,13 +76,13 @@
         "a": "Renee Wan / Alex Wong",
         "b": "Pratush Brahma / Alpa Nawre",
         "scoresA": [
-          null,
-          null,
+          21,
+          21,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          16,
+          8,
           null
         ]
       },
@@ -90,20 +90,20 @@
         "a": "Aaron Mares / Nurjahan Sriti",
         "b": "Fumiya Kayatani / Yushi Huang",
         "scoresA": [
-          null,
-          null,
-          null
+          19,
+          21,
+          21
         ],
         "scoresB": [
-          null,
-          null,
-          null
+          21,
+          17,
+          15
         ]
       }
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 1,
+  "leagueActiveDay": 2,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }
