@@ -95,17 +95,31 @@
       [
         {
           "a": "Jenny Zheng / Hemanth Gunduboina",
-          "b": "Samantha Quan / Hao Nguyen"
+          "b": "Samantha Quan / Hao Nguyen",
+          "scoresA": [
+            20
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         },
         {
           "a": "Danny Ng / Ria Balwalli",
-          "b": "Faye Marie Caayon / Shyam Akavaram"
+          "b": "Faye Marie Caayon / Shyam Akavaram",
+          "scoresA": [
+            12
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         }
       ],
       [
         {
-          "a": "TBD",
-          "b": "TBD"
+          "a": "Samantha Quan / Hao Nguyen",
+          "b": "Faye Marie Caayon / Shyam Akavaram"
         }
       ]
     ],
