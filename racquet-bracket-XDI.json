@@ -57,13 +57,22 @@
         },
         {
           "a": "Ritika Ghanti / Kyoung Mun Cho",
-          "b": "Danny Ng / Ria Balwalli"
+          "b": "Danny Ng / Ria Balwalli",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            10,
+            8
+          ],
+          "winner": "a"
         }
       ],
       [
         {
           "a": "TBD",
-          "b": "TBD"
+          "b": "Ritika Ghanti / Kyoung Mun Cho"
         }
       ]
     ],
