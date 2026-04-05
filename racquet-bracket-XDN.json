@@ -116,7 +116,16 @@
       [
         {
           "a": "Sai Krishna Sangeetha / Anuradha Sahithi Padavala",
-          "b": "Alec Kwan / Ivy Hoang"
+          "b": "Alec Kwan / Ivy Hoang",
+          "scoresB": [
+            21,
+            21
+          ],
+          "scoresA": [
+            10,
+            8
+          ],
+          "winner": "b"
         }
       ]
     ],

@@ -53,7 +53,16 @@
       [
         {
           "a": "Tianxingjian Ding / Harshitha Sathess Kumar",
-          "b": "Faye Marie Caayon / Shyam Akavaram"
+          "b": "Faye Marie Caayon / Shyam Akavaram",
+          "scoresA": [
+            21,
+            21
+          ],
+          "scoresB": [
+            14,
+            10
+          ],
+          "winner": "a"
         },
         {
           "a": "Ritika Ghanti / Kyoung Mun Cho",
@@ -71,8 +80,9 @@
       ],
       [
         {
-          "a": "TBD",
-          "b": "Ritika Ghanti / Kyoung Mun Cho"
+          "a": "Tianxingjian Ding / Harshitha Sathess Kumar",
+          "b": "Ritika Ghanti / Kyoung Mun Cho",
+          "winner": null
         }
       ]
     ],
@@ -84,15 +94,25 @@
     "rounds": [
       [
         {
-          "a": "Samantha Quan / Hao Nguyen",
-          "b": "Jenny Zheng / Hemanth Gunduboina"
+          "a": "Jenny Zheng / Hemanth Gunduboina",
+          "b": "Samantha Quan / Hao Nguyen"
+        },
+        {
+          "a": "Danny Ng / Ria Balwalli",
+          "b": "Faye Marie Caayon / Shyam Akavaram"
+        }
+      ],
+      [
+        {
+          "a": "TBD",
+          "b": "TBD"
         }
       ]
     ],
-    "size": 2,
+    "size": 4,
     "byeCount": 0,
-    "teamCount": 2,
-    "_loserKey": "Jenny Zheng / Hemanth Gunduboina|Samantha Quan / Hao Nguyen"
+    "teamCount": 4,
+    "_loserKey": "Danny Ng / Ria Balwalli|Faye Marie Caayon / Shyam Akavaram|Jenny Zheng / Hemanth Gunduboina|Samantha Quan / Hao Nguyen"
   },
   "leagueSchedule": null,
   "leagueBestOf": 1,
