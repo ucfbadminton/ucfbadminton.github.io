@@ -46,13 +46,13 @@
         "a": "Renee Wan / Alex Wong",
         "b": "Aaron Mares / Nurjahan Sriti",
         "scoresA": [
-          null,
-          null,
+          21,
+          21,
           null
         ],
         "scoresB": [
-          null,
-          null,
+          8,
+          16,
           null
         ]
       },
@@ -103,7 +103,7 @@
     ]
   ],
   "leagueBestOf": 3,
-  "leagueActiveDay": 0,
+  "leagueActiveDay": 1,
   "leagueRounds": "1",
   "leagueBestOfSel": "3"
 }

@@ -82,7 +82,15 @@
         {
           "a": "Tianxingjian Ding / Harshitha Sathess Kumar",
           "b": "Ritika Ghanti / Kyoung Mun Cho",
-          "winner": null
+          "winner": "b",
+          "scoresA": [
+            12,
+            19
+          ],
+          "scoresB": [
+            21,
+            21
+          ]
         }
       ]
     ],
@@ -119,7 +127,14 @@
       [
         {
           "a": "Samantha Quan / Hao Nguyen",
-          "b": "Faye Marie Caayon / Shyam Akavaram"
+          "b": "Faye Marie Caayon / Shyam Akavaram",
+          "scoresA": [
+            22
+          ],
+          "scoresB": [
+            25
+          ],
+          "winner": "b"
         }
       ]
     ],
