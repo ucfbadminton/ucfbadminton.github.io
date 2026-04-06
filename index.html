@@ -229,7 +229,24 @@ body {
 .match-team.loser { background: #f9fafb; color: #9ca3af; font-weight: 400; }
 .team-name-text {
   flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.82rem;
+  position: relative;
 }
+/* Hover/touch scroll for overflowing names */
+.team-name-text.overflowing { cursor: default; }
+.team-name-text.overflowing:hover,
+.team-name-text.overflowing.touched { text-overflow: clip; }
+.team-name-text.overflowing:hover .team-name-inner,
+.team-name-text.overflowing.touched .team-name-inner {
+  display: inline-block;
+  animation: nameScroll var(--scroll-duration, 3s) linear infinite;
+}
+@keyframes nameScroll {
+  0%   { transform: translateX(0); }
+  10%  { transform: translateX(0); }
+  90%  { transform: translateX(var(--scroll-distance, -50px)); }
+  100% { transform: translateX(var(--scroll-distance, -50px)); }
+}
+
 .score-display {
   display: flex; gap: 4px; flex-shrink: 0;
 }
@@ -268,22 +285,50 @@ body {
 .league-day-tab.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
 .league-day-tab:hover:not(.active) { border-color: var(--accent); color: var(--ink); }
 
-.league-match-row {
-  display: flex; align-items: center; padding: 10px 4px;
-  border-bottom: 1px solid var(--rule); gap: 10px;
+/* ── Stacked league layout ── */
+.league-match-stacked {
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--rule);
 }
-.league-match-row:last-child { border-bottom: none; }
-.league-team-name { flex: 1; font-weight: 600; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.league-team-name.right { text-align: right; }
-.league-vs { font-size: 0.72rem; color: var(--muted); font-weight: 700; flex-shrink: 0; }
-.league-score {
-  min-width: 38px; padding: 4px; text-align: center;
-  border: 1.5px solid var(--rule); border-radius: 7px;
-  font-size: 0.85rem; font-family: 'DM Mono', monospace; font-weight: 600;
-  background: var(--green-card);
+.league-match-stacked:last-child { border-bottom: none; }
+.league-match-stacked-teams {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
 }
-.league-score.winner { border-color: var(--accent); background: #f0fdf4; color: var(--green-dark); font-weight: 700; }
-.league-score.empty { color: var(--muted); border-style: dashed; }
+.league-stacked-name {
+  flex: 1; font-weight: 600; font-size: 0.88rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  position: relative;
+}
+.league-stacked-name.overflowing { cursor: default; }
+.league-stacked-name.overflowing:hover,
+.league-stacked-name.overflowing.touched { text-overflow: clip; }
+.league-stacked-name.overflowing:hover .league-name-inner,
+.league-stacked-name.overflowing.touched .league-name-inner {
+  display: inline-block;
+  animation: nameScroll var(--scroll-duration, 3s) linear infinite;
+}
+.league-stacked-name.right { text-align: right; }
+.league-stacked-vs {
+  font-size: 0.7rem; color: var(--muted); font-weight: 700; flex-shrink: 0;
+}
+.league-stacked-name.won { font-weight: 700; color: var(--green-dark); }
+.league-match-stacked-scores {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.league-set-group {
+  display: flex; align-items: center; gap: 3px;
+}
+.league-set-label {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;
+  color: var(--muted); flex-shrink: 0;
+}
+.league-set-score {
+  min-width: 28px; height: 26px; padding: 3px 4px; text-align: center;
+  border: 1.5px solid var(--rule); border-radius: 6px;
+  font-size: 0.82rem; font-family: 'DM Mono', monospace; font-weight: 600;
+  background: var(--green-card); line-height: 20px;
+}
+.league-set-score.winner { border-color: var(--accent); background: #f0fdf4; color: var(--green-dark); font-weight: 700; }
 
 /* ── EMPTY / ERROR STATES ── */
 .empty-state {
@@ -666,7 +711,46 @@ function renderBracketData(data, code) {
 
   html += `<div id="view-content">` + renderView(currentView, data, code) + `</div>`;
   bracketView.innerHTML = html;
+  detectOverflowingNames();
 }
+
+// ── Detect overflowing names and enable scroll on hover/touch ──
+function detectOverflowingNames() {
+  requestAnimationFrame(() => {
+    // Bracket match card names
+    document.querySelectorAll('.team-name-text').forEach(el => {
+      el.classList.remove('overflowing');
+      if (el.scrollWidth > el.clientWidth) {
+        el.classList.add('overflowing');
+        const dist = el.scrollWidth - el.clientWidth;
+        el.style.setProperty('--scroll-distance', `-${dist}px`);
+        el.style.setProperty('--scroll-duration', `${Math.max(2, dist / 30)}s`);
+      }
+    });
+    // League stacked names
+    document.querySelectorAll('.league-stacked-name').forEach(el => {
+      el.classList.remove('overflowing');
+      if (el.scrollWidth > el.clientWidth) {
+        el.classList.add('overflowing');
+        const dist = el.scrollWidth - el.clientWidth;
+        el.style.setProperty('--scroll-distance', `-${dist}px`);
+        el.style.setProperty('--scroll-duration', `${Math.max(2, dist / 30)}s`);
+      }
+    });
+  });
+}
+
+// Touch support: toggle .touched class on tap for mobile
+document.addEventListener('touchstart', e => {
+  const target = e.target.closest('.team-name-text.overflowing, .league-stacked-name.overflowing');
+  // Remove touched from all others first
+  document.querySelectorAll('.touched').forEach(el => {
+    if (el !== target) el.classList.remove('touched');
+  });
+  if (target) {
+    target.classList.toggle('touched');
+  }
+});
 
 function switchView(view) {
   currentView = view;
@@ -674,6 +758,7 @@ function switchView(view) {
     t.classList.toggle('active', t.textContent === ({bracket:'Bracket',consolation:'Consolation',league:'League',standing:'Standing'}[view]));
   });
   document.getElementById('view-content').innerHTML = renderView(view, currentData, currentCode);
+  detectOverflowingNames();
 }
 
 function renderView(view, data, code) {
@@ -762,29 +847,30 @@ function renderLeagueView(data, code) {
     const aWon = matchDone && wA >= winsNeeded;
     const bWon = matchDone && wB >= winsNeeded;
 
-    html += `<div class="league-match-row">
-      <span class="league-team-name" style="${aWon ? 'font-weight:700;color:var(--green-dark)' : ''}">${escHtml(m.a)}</span>`;
+    html += `<div class="league-match-stacked">`;
 
+    // Row 1: Names
+    html += `<div class="league-match-stacked-teams">`;
+    html += `<span class="league-stacked-name${aWon ? ' won' : ''}" data-fullname="${escHtml(m.a)}"><span class="league-name-inner">${escHtml(m.a)}</span></span>`;
+    html += `<span class="league-stacked-vs">vs</span>`;
+    html += `<span class="league-stacked-name right${bWon ? ' won' : ''}" data-fullname="${escHtml(m.b)}"><span class="league-name-inner">${escHtml(m.b)}</span></span>`;
+    html += `</div>`;
+
+    // Row 2: Scores — always shown, empty boxes when no score
+    html += `<div class="league-match-stacked-scores">`;
     for (let gi = 0; gi < bestOf; gi++) {
       const sa = (m.scoresA || [])[gi];
       const sb = (m.scoresB || [])[gi];
       const hasVal = sa !== null && sa !== undefined && sb !== null && sb !== undefined;
-      const aW = hasVal && sa > sb;
-      html += `<span class="league-score${!hasVal ? ' empty' : (aW ? ' winner' : '')}">${hasVal ? sa : '—'}</span>`;
+      html += `<div class="league-set-group">`;
+      html += `<span class="league-set-label">G${gi + 1}:</span>`;
+      html += `<span class="league-set-score${hasVal && sa > sb ? ' winner' : ''}">${hasVal ? sa : ''}</span>`;
+      html += `<span class="league-set-score${hasVal && sb > sa ? ' winner' : ''}">${hasVal ? sb : ''}</span>`;
+      html += `</div>`;
     }
+    html += `</div>`;
 
-    html += `<span class="league-vs">vs</span>`;
-
-    for (let gi = 0; gi < bestOf; gi++) {
-      const sa = (m.scoresA || [])[gi];
-      const sb = (m.scoresB || [])[gi];
-      const hasVal = sa !== null && sa !== undefined && sb !== null && sb !== undefined;
-      const bW = hasVal && sb > sa;
-      html += `<span class="league-score${!hasVal ? ' empty' : (bW ? ' winner' : '')}">${hasVal ? sb : '—'}</span>`;
-    }
-
-    html += `<span class="league-team-name right" style="${bWon ? 'font-weight:700;color:var(--green-dark)' : ''}">${escHtml(m.b)}</span>
-    </div>`;
+    html += `</div>`;
   });
 
   html += `</div>`;
@@ -881,7 +967,7 @@ function buildMatchCardHtml(m, ri, mi, code, bracketSize, isConsolation) {
     }
 
     return `<div class="${cls}">
-      <span class="team-name-text">${escHtml(name || 'TBD')}</span>
+      <span class="team-name-text" data-fullname="${escHtml(name || 'TBD')}"><span class="team-name-inner">${escHtml(name || 'TBD')}</span></span>
       ${scoreHtml}
     </div>`;
   }
