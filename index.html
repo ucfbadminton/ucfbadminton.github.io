@@ -268,8 +268,11 @@ body {
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--muted); padding: 8px 10px;
   border-bottom: 2px solid var(--rule);
+  white-space: nowrap;
 }
-.standing-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule); }
+.standing-table th:nth-child(2) { width: 160px; }
+.standing-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+.standing-table td:nth-child(2) { width: 160px; white-space: normal; word-break: break-word; }
 .standing-table tr:last-child td { border-bottom: none; }
 .standing-table tr.standing-top td { font-weight: 700; color: var(--green-dark); }
 .standing-rank { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--muted); }
@@ -287,17 +290,20 @@ body {
 
 /* ── Stacked league layout ── */
 .league-match-stacked {
-  padding: 10px 4px;
-  border-bottom: 1px solid var(--rule);
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--green-card), var(--white));
+  margin-bottom: 8px;
 }
-.league-match-stacked:last-child { border-bottom: none; }
+.league-match-stacked:last-child { margin-bottom: 0; }
 .league-match-stacked-teams {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
 }
 .league-stacked-name {
-  flex: 1; font-weight: 600; font-size: 0.88rem;
+  flex: 1; font-weight: 600; font-size: 0.9rem;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  position: relative;
+  position: relative; line-height: 1.3;
 }
 .league-stacked-name.overflowing { cursor: default; }
 .league-stacked-name.overflowing:hover,
@@ -309,26 +315,28 @@ body {
 }
 .league-stacked-name.right { text-align: right; }
 .league-stacked-vs {
-  font-size: 0.7rem; color: var(--muted); font-weight: 700; flex-shrink: 0;
+  font-size: 0.68rem; color: var(--muted); font-weight: 700; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: 0.5px;
 }
 .league-stacked-name.won { font-weight: 700; color: var(--green-dark); }
 .league-match-stacked-scores {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding-top: 8px; border-top: 1px solid var(--rule);
 }
 .league-set-group {
-  display: flex; align-items: center; gap: 3px;
+  display: flex; align-items: center; gap: 4px;
 }
 .league-set-label {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.5px;
   color: var(--muted); flex-shrink: 0;
 }
 .league-set-score {
-  min-width: 28px; height: 26px; padding: 3px 4px; text-align: center;
+  min-width: 28px; height: 26px; padding: 3px 5px; text-align: center;
   border: 1.5px solid var(--rule); border-radius: 6px;
   font-size: 0.82rem; font-family: 'DM Mono', monospace; font-weight: 600;
-  background: var(--green-card); line-height: 20px;
+  background: var(--white); line-height: 20px;
 }
-.league-set-score.winner { border-color: var(--accent); background: #f0fdf4; color: var(--green-dark); font-weight: 700; }
+.league-set-score.winner { border-color: var(--accent); background: #ecfdf5; color: var(--green-dark); font-weight: 700; }
 
 /* ── EMPTY / ERROR STATES ── */
 .empty-state {
@@ -829,9 +837,8 @@ function renderLeagueView(data, code) {
 
   const schedule = data.leagueSchedule;
   const bestOf   = data.leagueBestOf || 1;
-  const dayKey   = code;
-  if (leagueActiveDay[dayKey] === undefined) leagueActiveDay[dayKey] = 0;
-  const activeDay = Math.min(leagueActiveDay[dayKey], schedule.length - 1);
+  if (leagueActiveDay[code] === undefined) leagueActiveDay[code] = 0;
+  const activeDay = Math.min(leagueActiveDay[code], schedule.length - 1);
 
   let html = `<div class="league-day-tabs">` +
     schedule.map((_, i) => `<button class="league-day-tab${i === activeDay ? ' active' : ''}" onclick="setLeagueDay('${code}', ${i})">MD ${i + 1}</button>`).join('') +
@@ -922,6 +929,7 @@ function renderStandingView(data) {
   });
 
   let html = `<div class="card"><div class="card-title">League Standings</div>
+    <div style="overflow-x:auto">
     <table class="standing-table">
       <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th><th>GW</th><th>GL</th><th>PF</th><th>PA</th><th>+/-</th></tr></thead>
       <tbody>`;
@@ -938,7 +946,7 @@ function renderStandingView(data) {
     </tr>`;
   });
 
-  html += `</tbody></table></div>`;
+  html += `</tbody></table></div></div>`;
   return html;
 }
 
@@ -1022,7 +1030,7 @@ function getLeagueChampion(data) {
       stats[m.b].pf += wB; stats[m.b].pa += wA;
       (m.scoresA || []).forEach((sa, gi) => {
         const sb = (m.scoresB || [])[gi];
-        if (sa !== null && sb !== null) {
+        if (sa !== null && sa !== undefined && sb !== null && sb !== undefined) {
           stats[m.a].ppf += sa; stats[m.a].ppa += sb;
           stats[m.b].ppf += sb; stats[m.b].ppa += sa;
         }
