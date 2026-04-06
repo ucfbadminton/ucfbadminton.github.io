@@ -37,6 +37,7 @@ body {
   display: flex; align-items: center; gap: 16px;
   padding: 14px 28px;
   background: rgba(255,255,255,0.6);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
   position: sticky; top: 0; z-index: 200;
@@ -95,6 +96,7 @@ body {
 .sidebar {
   width: 220px; flex-shrink: 0;
   background: rgba(255,255,255,0.45);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-right: 1px solid var(--rule);
   padding: 20px 12px;
@@ -251,7 +253,7 @@ body {
   display: flex; gap: 4px; flex-shrink: 0;
 }
 .score-chip {
-  min-width: 26px; padding: 2px 5px; text-align: center;
+  width: 28px; padding: 2px 0; text-align: center;
   border: 1px solid var(--rule); border-radius: 5px;
   font-size: 0.75rem; font-family: 'DM Mono', monospace; font-weight: 600;
   color: var(--ink); background: var(--white);
@@ -264,15 +266,17 @@ body {
   width: 100%; border-collapse: collapse; font-size: 0.88rem;
 }
 .standing-table th {
-  text-align: left; font-size: 0.66rem; font-weight: 700;
+  text-align: center; font-size: 0.66rem; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--muted); padding: 8px 10px;
+  color: var(--muted); padding: 8px 6px;
   border-bottom: 2px solid var(--rule);
   white-space: nowrap;
 }
-.standing-table th:nth-child(2) { width: 160px; }
-.standing-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
-.standing-table td:nth-child(2) { width: 160px; white-space: normal; word-break: break-word; }
+.standing-table th:nth-child(1) { text-align: center; width: 32px; }
+.standing-table th:nth-child(2) { text-align: left; min-width: 80px; max-width: 180px; }
+.standing-table td { padding: 9px 6px; border-bottom: 1px solid var(--rule); white-space: nowrap; text-align: center; }
+.standing-table td:nth-child(1) { text-align: center; }
+.standing-table td:nth-child(2) { text-align: left; min-width: 80px; max-width: 180px; white-space: normal; word-break: break-word; }
 .standing-table tr:last-child td { border-bottom: none; }
 .standing-table tr.standing-top td { font-weight: 700; color: var(--green-dark); }
 .standing-rank { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--muted); }
@@ -322,6 +326,7 @@ body {
 .league-match-stacked-scores {
   display: flex; align-items: center; justify-content: center; gap: 12px;
   padding-top: 8px; border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
 }
 .league-set-group {
   display: flex; align-items: center; gap: 4px;
@@ -331,7 +336,7 @@ body {
   color: var(--muted); flex-shrink: 0;
 }
 .league-set-score {
-  min-width: 28px; height: 26px; padding: 3px 5px; text-align: center;
+  width: 32px; height: 26px; padding: 3px 0; text-align: center;
   border: 1.5px solid var(--rule); border-radius: 6px;
   font-size: 0.82rem; font-family: 'DM Mono', monospace; font-weight: 600;
   background: var(--white); line-height: 20px;
@@ -389,6 +394,15 @@ body {
   .sidebar-label { display: none; }
   .cat-btn { width: auto; padding: 6px 10px; }
   .cat-name { display: none; }
+  .bracket-title { font-size: 1.4rem; }
+  .standing-table { font-size: 0.78rem; }
+  .standing-table th { padding: 6px 4px; font-size: 0.6rem; letter-spacing: 1px; }
+  .standing-table td { padding: 7px 4px; }
+  .league-set-score { width: 28px; height: 24px; font-size: 0.75rem; }
+  .league-set-label { font-size: 0.58rem; }
+  .champion-banner { padding: 12px 16px; gap: 10px; }
+  .champion-emoji { font-size: 1.6rem; }
+  .champion-name { font-size: 1.2rem; }
 }
 
 /* ── SKELETON LOADER ── */
@@ -593,6 +607,11 @@ async function fetchBracket(code, forceRefresh = false) {
 async function selectBracket(code) {
   currentCode = code;
 
+  // Update URL hash for shareability
+  if (window.location.hash.replace('#', '').toUpperCase() !== code) {
+    history.replaceState(null, '', '#' + code);
+  }
+
   // Highlight sidebar
   document.querySelectorAll('.cat-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.code === code);
@@ -758,7 +777,7 @@ document.addEventListener('touchstart', e => {
   if (target) {
     target.classList.toggle('touched');
   }
-});
+}, { passive: true });
 
 function switchView(view) {
   currentView = view;
@@ -849,10 +868,10 @@ function renderLeagueView(data, code) {
 
   day.forEach(m => {
     const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
-    const matchDone = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
+    const anyScoreEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
     const winsNeeded = Math.ceil(bestOf / 2);
-    const aWon = matchDone && wA >= winsNeeded;
-    const bWon = matchDone && wB >= winsNeeded;
+    const aWon = anyScoreEntered && wA >= winsNeeded;
+    const bWon = anyScoreEntered && wB >= winsNeeded;
 
     html += `<div class="league-match-stacked">`;
 
@@ -1068,7 +1087,7 @@ function countGameWins(scoresA, scoresB, bestOf) {
 
 function escHtml(str) {
   if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function setStatus(code, status) {
@@ -1121,9 +1140,14 @@ function renderConfigNeeded(code) {
 function startAutoRefresh() {
   if (!CONFIG.refreshInterval) return;
   refreshTimer = setInterval(() => {
-    if (currentCode) refreshCurrent();
+    if (currentCode && !document.hidden) refreshCurrent();
   }, CONFIG.refreshInterval);
 }
+
+// Pause/resume refresh when tab visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && currentCode) refreshCurrent();
+});
 
 // ── Init: scan all brackets on load ──
 async function initScan() {
