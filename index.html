@@ -21,7 +21,6 @@
   --rule:        #d0ead9;
   --white:       #ffffff;
   --shadow:      0 4px 20px rgba(6,30,18,0.08);
-  --live-red:    #ef4444;
 }
 
 html, body { min-height: 100%; font-family: 'DM Sans', system-ui, sans-serif; }
@@ -49,16 +48,6 @@ body {
 }
 .brand span { opacity: 0.5; font-weight: 400; margin-left: 6px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; }
 
-.live-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: #fef2f2; border: 1px solid #fca5a5;
-  color: var(--live-red); padding: 3px 10px; border-radius: 20px;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-}
-.live-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--live-red);
-  animation: pulse-dot 1.4s ease-in-out infinite;
-}
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.4; transform: scale(0.7); }
@@ -121,8 +110,6 @@ body {
 .cat-btn:hover { background: rgba(255,255,255,0.7); }
 .cat-btn.active { background: var(--white); box-shadow: var(--shadow); }
 .cat-btn.active .cat-code { color: var(--green-dark); }
-.cat-btn.unavailable { opacity: 0.35; cursor: default; }
-.cat-btn.unavailable:hover { background: transparent; }
 
 .cat-code {
   font-family: 'DM Mono', monospace;
@@ -172,7 +159,7 @@ body {
   color: white; padding: 4px 14px 4px 10px;
   border-radius: 20px; font-size: 0.78rem; font-weight: 600;
 }
-.bracket-badge .code { font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; margin-right: 6px; }
+.bracket-badge .badge-code { font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; margin-right: 6px; }
 
 /* ── CARDS ── */
 .card {
@@ -403,6 +390,13 @@ body {
   .champion-banner { padding: 12px 16px; gap: 10px; }
   .champion-emoji { font-size: 1.6rem; }
   .champion-name { font-size: 1.2rem; }
+  .topbar { flex-wrap: wrap; padding: 10px 16px; gap: 8px; }
+  .topbar-divider { display: none; }
+  .tournament-name {
+    order: 10; width: 100%;
+    font-size: 0.78rem; opacity: 0.7;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
 }
 
 /* ── SKELETON LOADER ── */
@@ -433,7 +427,6 @@ body {
   <div class="brand">Racquet Bracket <span>Live</span></div>
   <div class="topbar-divider" id="topbar-divider"></div>
   <div class="tournament-name" id="tournament-name"></div>
-  <div class="live-badge" id="live-badge"><div class="live-dot"></div>LIVE</div>
   <div class="topbar-right">
     <span class="last-updated" id="last-updated">—</span>
     <button class="btn-refresh" id="btn-refresh" onclick="refreshCurrent()" title="Refresh">
@@ -537,9 +530,10 @@ body {
   </main>
 </div>
 
+
 <script>
 // ═══════════════════════════════════════════════════
-//  ⚙️  CONFIGURATION — Edit this to match your repo!
+//  CONFIGURATION — Edit this to match your repo!
 // ═══════════════════════════════════════════════════
 const CONFIG = {
   // GitHub raw content base URL
@@ -557,39 +551,147 @@ const CONFIG = {
 
   // Tournament name shown in the topbar (set to "" to hide)
   tournamentName: "UCF Spring 2026 Tournament",
-
-  // Show the red LIVE badge in the topbar (set to false when tournament is over)
-  showLive: true,
 };
 // ═══════════════════════════════════════════════════
 
+// ── Constants ──
 const CAT_NAMES = {
-  MS: 'Men\'s Singles', WS: 'Women\'s Singles',
-  MD: 'Men\'s Doubles', WD: 'Women\'s Doubles', XD: 'Mixed Doubles',
+  MS: "Men's Singles", WS: "Women's Singles",
+  MD: "Men's Doubles", WD: "Women's Doubles", XD: "Mixed Doubles",
 };
 const LEVEL_NAMES = { N: 'Novice', I: 'Intermediate', O: 'Open' };
+const ALL_CODES = ['MSN','MSI','MSO','WSN','WSI','WSO','MDN','MDI','MDO','WDN','WDI','WDO','XDN','XDI','XDO'];
 
-// State
+// ── State ──
 const cache = {};
 let currentCode = null;
 let currentView = 'bracket'; // bracket | consolation | league | standing
-let currentData = null;      // currently displayed bracket data
+let currentData = null;
 let leagueActiveDay = {};
 let refreshTimer = null;
+
+// ═══════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════
 
 function getUrl(code) {
   return CONFIG.baseUrl + CONFIG.filePattern.replace('{code}', code);
 }
 
-// ── Fetch a bracket JSON ──
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function setStatus(code, statusClass) {
+  const el = document.getElementById('status-' + code);
+  if (el) el.className = 'cat-status ' + statusClass;
+}
+
+function updateTimestamp(date) {
+  if (!date) return;
+  document.getElementById('last-updated').textContent = 'Updated ' + date.toLocaleTimeString();
+}
+
+function getRoundNames(total) {
+  const finals = ['Final', 'Semi-Final', 'Quarter-Final'];
+  return Array.from({ length: total }, (_, i) => {
+    const fromEnd = total - 1 - i;
+    return fromEnd < finals.length ? finals[fromEnd] : `Round ${i + 1}`;
+  });
+}
+
+function countGameWins(scoresA, scoresB, bestOf) {
+  let wA = 0, wB = 0;
+  const n = Math.max(scoresA.length, scoresB.length, bestOf);
+  for (let i = 0; i < n; i++) {
+    const a = scoresA[i], b = scoresB[i];
+    if (a != null && b != null) {
+      if (a > b) wA++; else if (b > a) wB++;
+    }
+  }
+  return { wA, wB };
+}
+
+// Tally league statistics (shared by standings view and champion detection)
+function tallyLeagueStats(schedule, teams, bestOf) {
+  const stats = {};
+  teams.forEach(t => { stats[t] = { p: 0, w: 0, l: 0, pf: 0, pa: 0, ppf: 0, ppa: 0 }; });
+
+  schedule.forEach(day => {
+    day.forEach(m => {
+      if (!stats[m.a] || !stats[m.b]) return;
+      const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
+      const anyEntered = (m.scoresA || []).some((s, i) => s != null && (m.scoresB || [])[i] != null);
+      if (!anyEntered) return;
+
+      stats[m.a].pf += wA; stats[m.a].pa += wB;
+      stats[m.b].pf += wB; stats[m.b].pa += wA;
+
+      (m.scoresA || []).forEach((sa, gi) => {
+        const sb = (m.scoresB || [])[gi];
+        if (sa != null && sb != null) {
+          stats[m.a].ppf += sa; stats[m.a].ppa += sb;
+          stats[m.b].ppf += sb; stats[m.b].ppa += sa;
+        }
+      });
+
+      const winsNeeded = Math.ceil(bestOf / 2);
+      if (wA >= winsNeeded || wB >= winsNeeded) {
+        stats[m.a].p++; stats[m.b].p++;
+        if (wA > wB) { stats[m.a].w++; stats[m.b].l++; }
+        else         { stats[m.b].w++; stats[m.a].l++; }
+      }
+    });
+  });
+
+  return Object.entries(stats).sort((x, y) => {
+    const [, a] = x, [, b] = y;
+    const wl = (b.w - b.l) - (a.w - a.l);
+    if (wl !== 0) return wl;
+    const gw = (b.pf - b.pa) - (a.pf - a.pa);
+    if (gw !== 0) return gw;
+    return (b.ppf - b.ppa) - (a.ppf - a.ppa);
+  });
+}
+
+function getChampion(bracket) {
+  if (!bracket) return null;
+  const finalMatch = bracket.rounds[bracket.rounds.length - 1]?.[0];
+  if (!finalMatch?.winner) return null;
+  const name = finalMatch[finalMatch.winner];
+  return (name && name !== 'TBD' && name !== 'BYE') ? name : null;
+}
+
+function getLeagueChampion(data) {
+  if (!data.leagueSchedule) return null;
+  const schedule = data.leagueSchedule;
+  const bestOf   = data.leagueBestOf || 1;
+  const teams    = data.teams || [];
+
+  // Champion only determined when all matches have scores
+  const allDone = schedule.every(day =>
+    day.every(m => (m.scoresA || []).some((s, i) => s != null && (m.scoresB || [])[i] != null))
+  );
+  if (!allDone) return null;
+
+  const sorted = tallyLeagueStats(schedule, teams, bestOf);
+  return sorted[0]?.[0] ?? null;
+}
+
+// ═══════════════════════════════════════════════════
+//  DATA FETCHING
+// ═══════════════════════════════════════════════════
+
 async function fetchBracket(code, forceRefresh = false) {
-  if (!forceRefresh && cache[code] && cache[code].data) return cache[code];
+  if (!forceRefresh && cache[code]?.data) return cache[code];
 
   setStatus(code, 'loading');
-  const url = getUrl(code);
-
   try {
-    const res = await fetch(url + '?_=' + Date.now()); // cache-bust
+    const res = await fetch(getUrl(code) + '?_=' + Date.now());
     if (!res.ok) throw new Error(res.status === 404 ? 'not_found' : 'error');
     const data = await res.json();
     cache[code] = { data, fetchedAt: new Date() };
@@ -603,200 +705,81 @@ async function fetchBracket(code, forceRefresh = false) {
   }
 }
 
-// ── Select + render a bracket ──
-async function selectBracket(code) {
-  currentCode = code;
+// ═══════════════════════════════════════════════════
+//  RENDERING — HTML builders
+// ═══════════════════════════════════════════════════
 
-  // Update URL hash for shareability
-  if (window.location.hash.replace('#', '').toUpperCase() !== code) {
-    history.replaceState(null, '', '#' + code);
-  }
-
-  // Highlight sidebar
-  document.querySelectorAll('.cat-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.code === code);
-  });
-
-  // Show loading in content
-  const bracketView = document.getElementById('bracket-view');
-  const welcomeScreen = document.getElementById('welcome-screen');
-  welcomeScreen.style.display = 'none';
-  bracketView.style.display = 'block';
-  bracketView.innerHTML = renderSkeleton();
-
-  const result = await fetchBracket(code);
-  updateTimestamp(result.fetchedAt);
-
-  if (!result.data) {
-    bracketView.innerHTML = renderNotFound(code);
-    return;
-  }
-
-  // Check if URL is still default
-  if (CONFIG.baseUrl.includes('YOUR_USERNAME')) {
-    bracketView.innerHTML = renderConfigNeeded(code);
-    return;
-  }
-
-  renderBracketData(result.data, code);
+function renderSkeleton() {
+  return `<div style="padding:20px">
+    <div class="skeleton" style="height:36px;width:220px;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:16px;width:300px;margin-bottom:24px"></div>
+    <div class="skeleton" style="height:200px;margin-bottom:12px"></div>
+  </div>`;
 }
 
-// ── Refresh current bracket ──
-async function refreshCurrent() {
-  if (!currentCode) return;
-  const btn = document.getElementById('btn-refresh');
-  btn.classList.add('spinning');
-
-  const result = await fetchBracket(currentCode, true);
-  updateTimestamp(result.fetchedAt);
-  btn.classList.remove('spinning');
-
-  if (!result.data) {
-    document.getElementById('bracket-view').innerHTML = renderNotFound(currentCode);
-    return;
-  }
-  renderBracketData(result.data, currentCode);
+function renderNotFound(code) {
+  if (CONFIG.baseUrl.includes('YOUR_USERNAME')) return renderConfigNeeded(code);
+  return `<div class="empty-state">
+    <div class="emoji">📂</div>
+    <h2>No file found</h2>
+    <p>Could not find <code>racquet-bracket-${code}.json</code> in your repository.<br><br>
+    Make sure the file is uploaded to:<br><code>${getUrl(code)}</code></p>
+  </div>`;
 }
 
-function updateTimestamp(date) {
-  if (!date) return;
-  const el = document.getElementById('last-updated');
-  el.textContent = 'Updated ' + date.toLocaleTimeString();
-}
-
-// ── Main render entry ──
-function renderBracketData(data, code) {
-  currentData = data; // store globally so tab buttons can reference it safely
-
-  const bracketView = document.getElementById('bracket-view');
-
-  // Determine available tabs
-  const hasBracket     = !!data.bracket;
-  const hasConsolation = !!data.consolationBracket;
-  const hasLeague      = !!data.leagueSchedule;
-  const hasStanding    = hasLeague;
-
-  const tabs = [];
-  if (hasBracket)     tabs.push({ id: 'bracket',     label: 'Bracket' });
-  if (hasConsolation) tabs.push({ id: 'consolation',  label: 'Consolation' });
-  if (hasLeague)      tabs.push({ id: 'league',       label: 'League' });
-  if (hasStanding)    tabs.push({ id: 'standing',     label: 'Standing' });
-
-  // Default to first available tab
-  if (!tabs.find(t => t.id === currentView)) {
-    currentView = tabs[0]?.id ?? 'bracket';
-  }
-
-  const catCode  = data.category || code.slice(0, 2);
-  const lvlCode  = data.level    || code.slice(2);
-  const catName  = CAT_NAMES[catCode] || catCode;
-  const lvlName  = LEVEL_NAMES[lvlCode] || lvlCode;
-
-  // Champions
-  const bracketChampion = getChampion(data.bracket);
-  const leagueChampion  = getLeagueChampion(data);
-
-  let html = `
-    <div class="bracket-header">
-      <h1 class="bracket-title">${catName}</h1>
-      <div class="bracket-badge">
-        <span class="code">${code}</span>
-        ${lvlName}
-      </div>
+function renderConfigNeeded() {
+  return `<div>
+    <div class="config-notice">
+      ⚙️ <strong>Setup needed:</strong> Edit the <code>CONFIG.baseUrl</code> at the top of this file to point to your GitHub repository.<br><br>
+      Example: <code>https://raw.githubusercontent.com/your-username/your-repo/main/</code>
     </div>
-  `;
-
-  if (bracketChampion) {
-    html += `
-      <div class="champion-banner">
-        <div class="champion-emoji">🥇</div>
-        <div>
-          <div class="champion-label">Bracket Champion</div>
-          <div class="champion-name">${escHtml(bracketChampion)}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  if (leagueChampion) {
-    html += `
-      <div class="champion-banner" style="animation-delay:150ms">
-        <div class="champion-emoji">🏆</div>
-        <div>
-          <div class="champion-label">League Champion</div>
-          <div class="champion-name">${escHtml(leagueChampion)}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  if (tabs.length > 1) {
-    html += `<div class="view-tabs">` +
-      tabs.map(t => `<button class="view-tab${t.id === currentView ? ' active' : ''}" onclick="switchView('${t.id}')">${t.label}</button>`).join('') +
-      `</div>`;
-  }
-
-  html += `<div id="view-content">` + renderView(currentView, data, code) + `</div>`;
-  bracketView.innerHTML = html;
-  detectOverflowingNames();
+    <div class="empty-state">
+      <div class="emoji">🏸</div>
+      <h2>Ready to go!</h2>
+      <p>Once configured, upload your JSON files as:<br>
+      <code>racquet-bracket-MSN.json</code>, <code>racquet-bracket-XDI.json</code>, etc.<br><br>
+      This viewer will auto-refresh every ${CONFIG.refreshInterval / 1000}s.</p>
+    </div>
+  </div>`;
 }
 
-// ── Detect overflowing names and enable scroll on hover/touch ──
-function detectOverflowingNames() {
-  requestAnimationFrame(() => {
-    // Bracket match card names
-    document.querySelectorAll('.team-name-text').forEach(el => {
-      el.classList.remove('overflowing');
-      if (el.scrollWidth > el.clientWidth) {
-        el.classList.add('overflowing');
-        const dist = el.scrollWidth - el.clientWidth;
-        el.style.setProperty('--scroll-distance', `-${dist}px`);
-        el.style.setProperty('--scroll-duration', `${Math.max(2, dist / 30)}s`);
-      }
-    });
-    // League stacked names
-    document.querySelectorAll('.league-stacked-name').forEach(el => {
-      el.classList.remove('overflowing');
-      if (el.scrollWidth > el.clientWidth) {
-        el.classList.add('overflowing');
-        const dist = el.scrollWidth - el.clientWidth;
-        el.style.setProperty('--scroll-distance', `-${dist}px`);
-        el.style.setProperty('--scroll-duration', `${Math.max(2, dist / 30)}s`);
-      }
-    });
-  });
-}
+function buildMatchCardHtml(m, ri, mi, code, bracketSize, isConsolation) {
+  const roundSize = bracketSize / Math.pow(2, ri);
+  const labelText = `${code}${roundSize}#${mi + 1}`;
 
-// Touch support: toggle .touched class on tap for mobile
-document.addEventListener('touchstart', e => {
-  const target = e.target.closest('.team-name-text.overflowing, .league-stacked-name.overflowing');
-  // Remove touched from all others first
-  document.querySelectorAll('.touched').forEach(el => {
-    if (el !== target) el.classList.remove('touched');
-  });
-  if (target) {
-    target.classList.toggle('touched');
+  function teamRowHtml(name, side) {
+    const isBye = name === 'BYE';
+    const isTbd = !name || name === 'TBD';
+    let cls = 'match-team';
+    if (isBye)                              cls += ' bye';
+    else if (isTbd)                         cls += ' tbd';
+    else if (m.winner === side)             cls += ' winner';
+    else if (m.winner && m.winner !== side) cls += ' loser';
+
+    const scores = (side === 'a' ? m.scoresA : m.scoresB) || [];
+    const filledScores = scores.filter(s => s != null);
+
+    let scoreHtml = '';
+    if (!isBye && !isTbd && filledScores.length > 0) {
+      scoreHtml = `<div class="score-display">` +
+        filledScores.map(s => `<span class="score-chip">${s}</span>`).join('') +
+        `</div>`;
+    }
+
+    return `<div class="${cls}">
+      <span class="team-name-text" data-fullname="${escHtml(name || 'TBD')}"><span class="team-name-inner">${escHtml(name || 'TBD')}</span></span>
+      ${scoreHtml}
+    </div>`;
   }
-}, { passive: true });
 
-function switchView(view) {
-  currentView = view;
-  document.querySelectorAll('.view-tab').forEach(t => {
-    t.classList.toggle('active', t.textContent === ({bracket:'Bracket',consolation:'Consolation',league:'League',standing:'Standing'}[view]));
-  });
-  document.getElementById('view-content').innerHTML = renderView(view, currentData, currentCode);
-  detectOverflowingNames();
+  return `<div class="match-card">
+    <div class="match-id-label${isConsolation ? ' consolation-label' : ''}">${escHtml(labelText)}</div>
+    ${teamRowHtml(m.a, 'a')}
+    ${teamRowHtml(m.b, 'b')}
+  </div>`;
 }
 
-function renderView(view, data, code) {
-  if (view === 'bracket')     return renderBracketView(data.bracket, code);
-  if (view === 'consolation') return renderConsolationView(data.consolationBracket, code);
-  if (view === 'league')      return renderLeagueView(data, code);
-  if (view === 'standing')    return renderStandingView(data);
-  return '';
-}
-
-// ── BRACKET VIEW ──
+// ── Bracket view ──
 function renderBracketView(bracket, code) {
   if (!bracket) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No bracket data.</p></div></div>`;
 
@@ -828,13 +811,12 @@ function renderBracketView(bracket, code) {
   return html;
 }
 
-// ── CONSOLATION VIEW ──
+// ── Consolation view ──
 function renderConsolationView(bracket, code) {
   if (!bracket) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No consolation bracket.</p></div></div>`;
 
   const { rounds } = bracket;
   const roundNames = getRoundNames(rounds.length);
-
   let html = `<div class="card"><div class="card-title">Consolation Bracket</div><div class="bracket-wrap"><div class="bracket-rounds">`;
 
   rounds.forEach((matches, ri) => {
@@ -850,7 +832,7 @@ function renderConsolationView(bracket, code) {
   return html;
 }
 
-// ── LEAGUE VIEW ──
+// ── League view ──
 function renderLeagueView(data, code) {
   if (!data.leagueSchedule) return `<div class="card"><div class="empty-state"><div class="emoji">📋</div><p>No league data.</p></div></div>`;
 
@@ -868,26 +850,26 @@ function renderLeagueView(data, code) {
 
   day.forEach(m => {
     const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
-    const anyScoreEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
+    const anyScoreEntered = (m.scoresA || []).some((s, i) => s != null && (m.scoresB || [])[i] != null);
     const winsNeeded = Math.ceil(bestOf / 2);
     const aWon = anyScoreEntered && wA >= winsNeeded;
     const bWon = anyScoreEntered && wB >= winsNeeded;
 
     html += `<div class="league-match-stacked">`;
 
-    // Row 1: Names
+    // Team names
     html += `<div class="league-match-stacked-teams">`;
     html += `<span class="league-stacked-name${aWon ? ' won' : ''}" data-fullname="${escHtml(m.a)}"><span class="league-name-inner">${escHtml(m.a)}</span></span>`;
     html += `<span class="league-stacked-vs">vs</span>`;
     html += `<span class="league-stacked-name right${bWon ? ' won' : ''}" data-fullname="${escHtml(m.b)}"><span class="league-name-inner">${escHtml(m.b)}</span></span>`;
     html += `</div>`;
 
-    // Row 2: Scores — always shown, empty boxes when no score
+    // Game scores (always shown; empty boxes when no score entered)
     html += `<div class="league-match-stacked-scores">`;
     for (let gi = 0; gi < bestOf; gi++) {
       const sa = (m.scoresA || [])[gi];
       const sb = (m.scoresB || [])[gi];
-      const hasVal = sa !== null && sa !== undefined && sb !== null && sb !== undefined;
+      const hasVal = sa != null && sb != null;
       html += `<div class="league-set-group">`;
       html += `<span class="league-set-label">G${gi + 1}:</span>`;
       html += `<span class="league-set-score${hasVal && sa > sb ? ' winner' : ''}">${hasVal ? sa : ''}</span>`;
@@ -903,49 +885,11 @@ function renderLeagueView(data, code) {
   return html;
 }
 
-// ── STANDING VIEW ──
+// ── Standing view ──
 function renderStandingView(data) {
   if (!data.leagueSchedule) return `<div class="card"><div class="empty-state"><div class="emoji">📊</div><p>No standings data.</p></div></div>`;
 
-  const schedule = data.leagueSchedule;
-  const bestOf   = data.leagueBestOf || 1;
-  const teams    = data.teams || [];
-
-  const stats = {};
-  teams.forEach(t => { stats[t] = { p:0, w:0, l:0, pf:0, pa:0, ppf:0, ppa:0 }; });
-
-  schedule.forEach(day => {
-    day.forEach(m => {
-      if (!stats[m.a] || !stats[m.b]) return;
-      const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
-      const anyEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
-      if (!anyEntered) return;
-      stats[m.a].pf += wA; stats[m.a].pa += wB;
-      stats[m.b].pf += wB; stats[m.b].pa += wA;
-      (m.scoresA || []).forEach((sa, gi) => {
-        const sb = (m.scoresB || [])[gi];
-        if (sa !== null && sa !== undefined && sb !== null && sb !== undefined) {
-          stats[m.a].ppf += sa; stats[m.a].ppa += sb;
-          stats[m.b].ppf += sb; stats[m.b].ppa += sa;
-        }
-      });
-      const winsNeeded = Math.ceil(bestOf / 2);
-      if (wA >= winsNeeded || wB >= winsNeeded) {
-        stats[m.a].p++; stats[m.b].p++;
-        if (wA > wB) { stats[m.a].w++; stats[m.b].l++; }
-        else         { stats[m.b].w++; stats[m.a].l++; }
-      }
-    });
-  });
-
-  const sorted = Object.entries(stats).sort((x, y) => {
-    const [,a] = x, [,b] = y;
-    const wl = (b.w - b.l) - (a.w - a.l);
-    if (wl !== 0) return wl;
-    const gw = (b.pf - b.pa) - (a.pf - a.pa);
-    if (gw !== 0) return gw;
-    return (b.ppf - b.ppa) - (a.ppf - a.ppa);
-  });
+  const sorted = tallyLeagueStats(data.leagueSchedule, data.teams || [], data.leagueBestOf || 1);
 
   let html = `<div class="card"><div class="card-title">League Standings</div>
     <div style="overflow-x:auto">
@@ -969,130 +913,142 @@ function renderStandingView(data) {
   return html;
 }
 
-// ── Build read-only match card HTML ──
-function buildMatchCardHtml(m, ri, mi, code, bracketSize, isConsolation) {
-  const roundSize = bracketSize / Math.pow(2, ri);
-  const labelText = `${code}${roundSize}#${mi + 1}`;
+// ── View router ──
+function renderView(view, data, code) {
+  if (view === 'bracket')     return renderBracketView(data.bracket, code);
+  if (view === 'consolation') return renderConsolationView(data.consolationBracket, code);
+  if (view === 'league')      return renderLeagueView(data, code);
+  if (view === 'standing')    return renderStandingView(data);
+  return '';
+}
 
-  function teamRowHtml(name, side) {
-    const isBye = name === 'BYE';
-    const isTbd = !name || name === 'TBD';
-    let cls = 'match-team';
-    if (isBye) cls += ' bye';
-    else if (isTbd) cls += ' tbd';
-    else if (m.winner === side) cls += ' winner';
-    else if (m.winner && m.winner !== side) cls += ' loser';
+// ═══════════════════════════════════════════════════
+//  INTERACTION — selection, navigation, overflow
+// ═══════════════════════════════════════════════════
 
-    const scores = side === 'a' ? (m.scoresA || []) : (m.scoresB || []);
-    const filledScores = scores.filter(s => s !== null && s !== undefined);
+function renderBracketData(data, code) {
+  currentData = data;
+  const bracketView = document.getElementById('bracket-view');
 
-    let scoreHtml = '';
-    if (!isBye && !isTbd && filledScores.length > 0) {
-      scoreHtml = `<div class="score-display">` +
-        filledScores.map(s => `<span class="score-chip">${s}</span>`).join('') +
-        `</div>`;
-    }
+  // Determine available tabs
+  const hasBracket     = !!data.bracket;
+  const hasConsolation = !!data.consolationBracket;
+  const hasLeague      = !!data.leagueSchedule;
 
-    return `<div class="${cls}">
-      <span class="team-name-text" data-fullname="${escHtml(name || 'TBD')}"><span class="team-name-inner">${escHtml(name || 'TBD')}</span></span>
-      ${scoreHtml}
+  const tabs = [];
+  if (hasBracket)     tabs.push({ id: 'bracket',    label: 'Bracket' });
+  if (hasConsolation) tabs.push({ id: 'consolation', label: 'Consolation' });
+  if (hasLeague)      tabs.push({ id: 'league',      label: 'League' });
+  if (hasLeague)      tabs.push({ id: 'standing',    label: 'Standing' });
+
+  // Fall back to first available tab if current is not present
+  if (!tabs.find(t => t.id === currentView)) {
+    currentView = tabs[0]?.id ?? 'bracket';
+  }
+
+  const catCode = data.category || code.slice(0, 2);
+  const lvlCode = data.level    || code.slice(2);
+  const catName = CAT_NAMES[catCode] || catCode;
+  const lvlName = LEVEL_NAMES[lvlCode] || lvlCode;
+
+  const bracketChampion = getChampion(data.bracket);
+  const leagueChampion  = getLeagueChampion(data);
+
+  let html = `
+    <div class="bracket-header">
+      <h1 class="bracket-title">${catName}</h1>
+      <div class="bracket-badge">
+        <span class="badge-code">${code}</span>
+        ${lvlName}
+      </div>
     </div>`;
+
+  if (bracketChampion) {
+    html += `
+      <div class="champion-banner">
+        <div class="champion-emoji">🥇</div>
+        <div>
+          <div class="champion-label">Bracket Champion</div>
+          <div class="champion-name">${escHtml(bracketChampion)}</div>
+        </div>
+      </div>`;
   }
 
-  return `<div class="match-card">
-    <div class="match-id-label${isConsolation ? ' consolation-label' : ''}">${escHtml(labelText)}</div>
-    ${teamRowHtml(m.a, 'a')}
-    ${teamRowHtml(m.b, 'b')}
-  </div>`;
-}
-
-// ── Utilities ──
-function getRoundNames(total) {
-  const finals = ['Final', 'Semi-Final', 'Quarter-Final'];
-  return Array.from({length: total}, (_, i) => {
-    const fromEnd = total - 1 - i;
-    return fromEnd < finals.length ? finals[fromEnd] : `Round ${i + 1}`;
-  });
-}
-
-function getChampion(bracket) {
-  if (!bracket) return null;
-  const finalMatch = bracket.rounds[bracket.rounds.length - 1]?.[0];
-  if (!finalMatch?.winner) return null;
-  const name = finalMatch[finalMatch.winner];
-  return (name && name !== 'TBD' && name !== 'BYE') ? name : null;
-}
-
-function getLeagueChampion(data) {
-  if (!data.leagueSchedule) return null;
-  const schedule = data.leagueSchedule;
-  const bestOf   = data.leagueBestOf || 1;
-  const teams    = data.teams || [];
-
-  // All matches must be completed
-  const allDone = schedule.every(day =>
-    day.every(m => (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null))
-  );
-  if (!allDone) return null;
-
-  // Tally standings (same logic as renderStandingView)
-  const stats = {};
-  teams.forEach(t => { stats[t] = { w: 0, l: 0, pf: 0, pa: 0, ppf: 0, ppa: 0 }; });
-
-  schedule.forEach(day => {
-    day.forEach(m => {
-      if (!stats[m.a] || !stats[m.b]) return;
-      const { wA, wB } = countGameWins(m.scoresA || [], m.scoresB || [], bestOf);
-      const anyEntered = (m.scoresA || []).some((s, i) => s !== null && (m.scoresB || [])[i] !== null);
-      if (!anyEntered) return;
-      stats[m.a].pf += wA; stats[m.a].pa += wB;
-      stats[m.b].pf += wB; stats[m.b].pa += wA;
-      (m.scoresA || []).forEach((sa, gi) => {
-        const sb = (m.scoresB || [])[gi];
-        if (sa !== null && sa !== undefined && sb !== null && sb !== undefined) {
-          stats[m.a].ppf += sa; stats[m.a].ppa += sb;
-          stats[m.b].ppf += sb; stats[m.b].ppa += sa;
-        }
-      });
-      const winsNeeded = Math.ceil(bestOf / 2);
-      if (wA >= winsNeeded || wB >= winsNeeded) {
-        if (wA > wB) { stats[m.a].w++; stats[m.b].l++; }
-        else         { stats[m.b].w++; stats[m.a].l++; }
-      }
-    });
-  });
-
-  const sorted = Object.entries(stats).sort(([, a], [, b]) => {
-    const wl = (b.w - b.l) - (a.w - a.l);
-    if (wl !== 0) return wl;
-    const gw = (b.pf - b.pa) - (a.pf - a.pa);
-    if (gw !== 0) return gw;
-    return (b.ppf - b.ppa) - (a.ppf - a.ppa);
-  });
-
-  return sorted[0]?.[0] ?? null;
-}
-
-function countGameWins(scoresA, scoresB, bestOf) {
-  let wA = 0, wB = 0;
-  const n = Math.max(scoresA.length, scoresB.length, bestOf);
-  for (let i = 0; i < n; i++) {
-    const a = scoresA[i], b = scoresB[i];
-    if (a !== null && a !== undefined && b !== null && b !== undefined) {
-      if (a > b) wA++; else if (b > a) wB++;
-    }
+  if (leagueChampion) {
+    html += `
+      <div class="champion-banner" style="animation-delay:150ms">
+        <div class="champion-emoji">🏆</div>
+        <div>
+          <div class="champion-label">League Champion</div>
+          <div class="champion-name">${escHtml(leagueChampion)}</div>
+        </div>
+      </div>`;
   }
-  return { wA, wB };
+
+  if (tabs.length > 1) {
+    html += `<div class="view-tabs">` +
+      tabs.map(t => `<button class="view-tab${t.id === currentView ? ' active' : ''}" data-view="${t.id}" onclick="switchView('${t.id}')">${t.label}</button>`).join('') +
+      `</div>`;
+  }
+
+  html += `<div id="view-content">` + renderView(currentView, data, code) + `</div>`;
+  bracketView.innerHTML = html;
+  detectOverflowingNames();
 }
 
-function escHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+async function selectBracket(code) {
+  currentCode = code;
+
+  // Update URL hash for shareability
+  if (window.location.hash.replace('#', '').toUpperCase() !== code) {
+    history.replaceState(null, '', '#' + code);
+  }
+
+  // Highlight active sidebar button
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.code === code);
+  });
+
+  // Show loading skeleton
+  const bracketView   = document.getElementById('bracket-view');
+  const welcomeScreen = document.getElementById('welcome-screen');
+  welcomeScreen.style.display = 'none';
+  bracketView.style.display   = 'block';
+  bracketView.innerHTML       = renderSkeleton();
+
+  const result = await fetchBracket(code);
+  updateTimestamp(result.fetchedAt);
+
+  if (!result.data) {
+    bracketView.innerHTML = renderNotFound(code);
+    return;
+  }
+  renderBracketData(result.data, code);
 }
 
-function setStatus(code, status) {
-  const el = document.getElementById('status-' + code);
-  if (el) { el.className = 'cat-status ' + status; }
+async function refreshCurrent() {
+  if (!currentCode) return;
+  const btn = document.getElementById('btn-refresh');
+  btn.classList.add('spinning');
+
+  const result = await fetchBracket(currentCode, true);
+  updateTimestamp(result.fetchedAt);
+  btn.classList.remove('spinning');
+
+  if (!result.data) {
+    document.getElementById('bracket-view').innerHTML = renderNotFound(currentCode);
+    return;
+  }
+  renderBracketData(result.data, currentCode);
+}
+
+function switchView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.view === view);
+  });
+  document.getElementById('view-content').innerHTML = renderView(view, currentData, currentCode);
+  detectOverflowingNames();
 }
 
 function setLeagueDay(code, day) {
@@ -1101,42 +1057,34 @@ function setLeagueDay(code, day) {
   if (result?.data) renderBracketData(result.data, code);
 }
 
-function renderSkeleton() {
-  return `<div style="padding:20px">
-    <div class="skeleton" style="height:36px;width:220px;margin-bottom:16px"></div>
-    <div class="skeleton" style="height:16px;width:300px;margin-bottom:24px"></div>
-    <div class="skeleton" style="height:200px;margin-bottom:12px"></div>
-  </div>`;
+// ── Detect overflowing team names and enable scroll-on-hover/touch ──
+function detectOverflowingNames() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.team-name-text, .league-stacked-name').forEach(el => {
+      el.classList.remove('overflowing');
+      if (el.scrollWidth > el.clientWidth) {
+        el.classList.add('overflowing');
+        const dist = el.scrollWidth - el.clientWidth;
+        el.style.setProperty('--scroll-distance', `-${dist}px`);
+        el.style.setProperty('--scroll-duration', `${Math.max(2, dist / 30)}s`);
+      }
+    });
+  });
 }
 
-function renderNotFound(code) {
-  const isDefaultUrl = CONFIG.baseUrl.includes('YOUR_USERNAME');
-  if (isDefaultUrl) return renderConfigNeeded(code);
-  return `<div class="empty-state">
-    <div class="emoji">📂</div>
-    <h2>No file found</h2>
-    <p>Could not find <code>racquet-bracket-${code}.json</code> in your repository.<br><br>
-    Make sure the file is uploaded to:<br><code>${getUrl(code)}</code></p>
-  </div>`;
-}
+// Toggle .touched on tap for mobile name scrolling
+document.addEventListener('touchstart', e => {
+  const target = e.target.closest('.team-name-text.overflowing, .league-stacked-name.overflowing');
+  document.querySelectorAll('.touched').forEach(el => {
+    if (el !== target) el.classList.remove('touched');
+  });
+  if (target) target.classList.toggle('touched');
+}, { passive: true });
 
-function renderConfigNeeded(code) {
-  return `<div>
-    <div class="config-notice">
-      ⚙️ <strong>Setup needed:</strong> Edit the <code>CONFIG.baseUrl</code> at the top of this file to point to your GitHub repository.<br><br>
-      Example: <code>https://raw.githubusercontent.com/your-username/your-repo/main/</code>
-    </div>
-    <div class="empty-state">
-      <div class="emoji">🏸</div>
-      <h2>Ready to go!</h2>
-      <p>Once configured, upload your JSON files as:<br>
-      <code>racquet-bracket-MSN.json</code>, <code>racquet-bracket-XDI.json</code>, etc.<br><br>
-      This viewer will auto-refresh every ${CONFIG.refreshInterval / 1000}s.</p>
-    </div>
-  </div>`;
-}
+// ═══════════════════════════════════════════════════
+//  INIT / BOOT
+// ═══════════════════════════════════════════════════
 
-// ── Auto-refresh ──
 function startAutoRefresh() {
   if (!CONFIG.refreshInterval) return;
   refreshTimer = setInterval(() => {
@@ -1144,46 +1092,34 @@ function startAutoRefresh() {
   }, CONFIG.refreshInterval);
 }
 
-// Pause/resume refresh when tab visibility changes
+// Refresh immediately when tab becomes visible again
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && currentCode) refreshCurrent();
 });
 
-// ── Init: scan all brackets on load ──
 async function initScan() {
   if (CONFIG.baseUrl.includes('YOUR_USERNAME')) return;
-
-  const allCodes = ['MSN','MSI','MSO','WSN','WSI','WSO','MDN','MDI','MDO','WDN','WDI','WDO','XDN','XDI','XDO'];
-  // Fire all fetches in parallel (non-blocking)
-  allCodes.forEach(code => fetchBracket(code));
+  ALL_CODES.forEach(code => fetchBracket(code));
 }
 
-// ── Check URL hash for deep-linking ──
 function checkHash() {
   const hash = window.location.hash.replace('#', '').toUpperCase();
-  const allCodes = ['MSN','MSI','MSO','WSN','WSI','WSO','MDN','MDI','MDO','WDN','WDI','WDO','XDN','XDI','XDO'];
-  if (allCodes.includes(hash)) selectBracket(hash);
+  if (ALL_CODES.includes(hash)) selectBracket(hash);
 }
 
 window.addEventListener('hashchange', checkHash);
 
-// ── Boot ──
-// Apply CONFIG to topbar
+// Apply CONFIG to topbar elements
 (function initTopbar() {
   const nameEl    = document.getElementById('tournament-name');
   const dividerEl = document.getElementById('topbar-divider');
-  const liveEl    = document.getElementById('live-badge');
 
   if (CONFIG.tournamentName) {
-    nameEl.textContent    = CONFIG.tournamentName;
+    nameEl.textContent      = CONFIG.tournamentName;
     dividerEl.style.display = '';
   } else {
     nameEl.style.display    = 'none';
     dividerEl.style.display = 'none';
-  }
-
-  if (!CONFIG.showLive) {
-    liveEl.style.display = 'none';
   }
 })();
 
